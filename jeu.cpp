@@ -1,6 +1,8 @@
 #include "jeu.h"
 #include <iostream>
 
+int taille = 20;
+
 Jeu::Jeu() {
     initialiserPlateau();
 }
