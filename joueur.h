@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include "Pion.h"
+#include "pion.h"
 
 class Joueur {
 public:
-    Joueur(int id, const std::string& nom);
+    Joueur(int id, int gold, const std::string& nom);
     void ajouterPion(Pion* pion);
     void deplacerPion(Pion* pion, int x, int y);
     void produirePion(Pion* chateau, PionType type);

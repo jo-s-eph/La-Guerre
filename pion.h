@@ -19,11 +19,14 @@ public:
     int getX() const;
     int getY() const;
     int getPv() const;
+    int getColor() const;
+    char getIcon() const;
     
 protected:
     int x, y;   // Coordonnées du pion
     int pv;     // Point de vie du pion
     char icon;  // Lettre Représentant le pion
+    int color;  // 1 = rouge, 0 = bleu
     int puiss;  // Nb de points de vie enlevé à la cible lors d’une attaque du pion
     int depl;   // Nb maximum de cases parcourues par le pion à chaque tour
     int prod;   // Qté d’or produite par le pion (lors d’une action pour un paysan)/
@@ -37,7 +40,7 @@ Un guerrier peut se déplacer et attaquer.
 class Guerrier : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Guerrier(int x, int y);
+    Guerrier(int x, int y, int color);
     // virtual void deplacer(int newX, int newY) override;
 };
 
@@ -49,7 +52,7 @@ Un château ne peut ni se déplacer ni attaquer mais produit de l’or passiveme
 class Chateau : public Pion {   
     // Déclaration de la classe Chateau héritant de Pion
 public:
-    Chateau(int x, int y);
+    Chateau(int x, int y, int color);
     void produirePion();    // Méthode spé à Chateau
     void genererOr();       // Méthode spé à Chateau
     // virtual void deplacer(int newX, int newY) override;
@@ -62,7 +65,7 @@ Un paysan peut se déplacer ou produire des ressources.
 class Paysan : public Pion {   
     // Déclaration de la classe Paysan héritant de Pion
 public:
-    Paysan(int x, int y);
+    Paysan(int x, int y, int color);
     void genererOr();       // Méthode spé à Paysan
     // virtual void deplacer(int newX, int newY) override;
 };
@@ -75,6 +78,6 @@ cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se tran
 class Seigneur : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Seigneur(int x, int y);
+    Seigneur(int x, int y, int color);
     void transformation();       // Méthode spé à Seigneur
 };

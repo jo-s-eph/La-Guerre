@@ -2,11 +2,11 @@ CC=g++
 CPPFLAGS=-Wall -Wextra -std=c++20
 CPPFILES= main
 FILENAME= Projet
-BIN=$(shell find . -maxdepth 1 -type f ! -name "*.*" ! -name "Makefile")
+BIN= jeu.exe
 
 all: $(CPPFILES)
 
-main: main.cpp pion.cpp jeu.cpp
+main: main.cpp pion.cpp jeu.cpp joueur.cpp
 	$(CC) -o jeu.exe $^ $(CPPFLAGS)
 
 zip:

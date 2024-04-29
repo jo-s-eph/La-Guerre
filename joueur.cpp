@@ -1,6 +1,6 @@
 #include "joueur.h"
 
-Joueur::Joueur(int id, const std::string& nom) : id(id), nom(nom), gold(10) {
+Joueur::Joueur(int id, int gold, const std::string& nom) : id(id), gold(gold), nom(nom) {
 }
 
 void Joueur::ajouterPion(Pion* pion) {
@@ -23,14 +23,8 @@ void Joueur::attaquer(Pion* attaquant, Pion* cible) {
     attaquant->attaquer(*cible);
 }
 
-std::string Joueur::getNom() const {
-    return nom;
-}
+std::string Joueur::getNom() const {return nom;}
 
-int Joueur::getOr() const {
-    return gold;
-}
+int Joueur::getOr() const {return gold;}
 
-void Joueur::ajouterOr(int montant) {
-    gold += montant;
-}
+void Joueur::ajouterOr(int montant) {gold += montant;}

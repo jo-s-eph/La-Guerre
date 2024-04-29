@@ -1,11 +1,11 @@
 #include <iostream>
 #include "jeu.h"
+#include "joueur.h"
 #include "pion.h"
 
 int main()
 {
     Jeu J;
-    Guerrier G(12,0);
-    std::cout << G.getPv() << std::endl;
+    J.afficherEtatJeu();
     return 0;
 }

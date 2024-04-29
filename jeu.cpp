@@ -1,14 +1,33 @@
 #include "jeu.h"
 #include <iostream>
+#include <iomanip> // std::setw
 
-int taille = 20;
+#define TAILLE 20
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define BLUE    "\033[34m"
+#define GREY    "\033[90m"
 
-Jeu::Jeu() {
+Jeu::Jeu() : rouge(1, 20, "Rouge"), bleu(0, 20, "Bleu") {
     initialiserPlateau();
 }
 
 void Jeu::initialiserPlateau() {
-    // Initialisation du plateau avec des pions et des cases vides
+    plateau.resize(TAILLE, std::vector<Pion*>(TAILLE, nullptr));
+
+    Chateau* chateauRouge = new Chateau(5, 5, 1);
+    Paysan* paysanRouge = new Paysan(6, 6, 1);
+    rouge.ajouterPion(chateauRouge);
+    rouge.ajouterPion(paysanRouge);
+    plateau[5][5] = chateauRouge;
+    plateau[6][6] = paysanRouge;
+
+    Chateau* chateauBleu = new Chateau(15, 15, 0);
+    Paysan* paysanBleu = new Paysan(16, 16, 0);
+    bleu.ajouterPion(chateauBleu);
+    bleu.ajouterPion(paysanBleu);
+    plateau[15][15] = chateauBleu;
+    plateau[16][16] = paysanBleu;
 }
 
 void Jeu::demarrer() {
@@ -19,11 +38,60 @@ void Jeu::demarrer() {
 }
 
 void Jeu::afficherEtatJeu() {
-    // for (auto& ligne : plateau) {
-    //     for (auto pion : ligne) {
-    //         if (pion) std::cout << pion->getSymbol() << " ";
-    //         else std::cout << "- ";
-    //     }
-    //     std::cout << std::endl;
-    // }
+    for (int i = 0; i < TAILLE; ++i) {
+        std::cout << TAILLE - i << "\t"; // display X coord on the left
+        for (int j = 0; j < TAILLE; ++j) {
+            if (plateau[i][j] != nullptr) {
+                if (plateau[i][j]->getColor())
+                    std::cout << RED << plateau[i][j]->getIcon() << RESET;
+                else
+                    std::cout << BLUE << plateau[i][j]->getIcon() << RESET ;                
+            } else {
+                std::cout << GREY << "-" << RESET;
+            }
+            if (j < TAILLE - 1) {
+                std::cout << " ";
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "\t"; // display Y at the bottom of the grid
+    for (int j = 0; j < TAILLE; ++j) {
+        std::cout << j+1 << " "; // display Y at the bottom of the grid
+    }
+    std::cout << std::endl;
 }
+
+// void Jeu::afficherEtatJeu() {
+//     for (int i = 0; i < TAILLE; ++i) {
+//         // std::cout << TAILLE - i << "\t"; // display X coord on the left
+//         std::cout << std::setw(2) << TAILLE - i << "\t"; // Use setw to align
+//         for (int j = 0; j < TAILLE; ++j) {
+//             if (plateau[i][j] != nullptr) {
+//                 if (plateau[i][j]->getColor())
+//                     std::cout << RED << plateau[i][j]->getIcon() << RESET;
+//                 else
+//                     std::cout << BLUE << plateau[i][j]->getIcon() << RESET ;                
+//             } else {
+//                 std::cout << GREY << "-" << RESET;
+//             }
+//             std::cout << " "; // Uniform spacing
+//             // if (j < TAILLE - 1) {
+//             //     std::cout << " ";
+//             // }
+//         }
+//         std::cout << std::endl;
+//     }
+//     // std::cout << "\t"; // display Y at the bottom of the grid
+//     std::cout << std::setw(3) << " "; // Adjust setw to align with your rows
+//     for (int j = 0; j < TAILLE; ++j) {
+//         if (j < 9) {
+//             // Single digit numbers
+//             std::cout << j + 1 << "  "; // Two spaces after single digit
+//         } else {
+//             // Double-digit numbers
+//             std::cout << j + 1 << " "; // One space after double digits
+//         }
+//     }
+//     std::cout << std::endl;
+// }

@@ -13,14 +13,17 @@ void Pion::attaquer(Pion& cible) {
 
 int Pion::getX() const { return x; }
 int Pion::getY() const { return y; }
+char Pion::getIcon() const { return icon; }
 int Pion::getPv() const { return pv; }
+int Pion::getColor() const { return color; }
 
 /*
 Un guerrier peut se déplacer et attaquer.
 */
 
-Guerrier::Guerrier(int x, int y) : Pion(x, y, 10) { 
+Guerrier::Guerrier(int x, int y, int couleur) : Pion(x, y, 10) { 
     icon = 'G';
+    color = couleur;
     puiss = 5;
     depl = 3;
     prod = 0;   // Guerrier ne produit rien
@@ -32,8 +35,9 @@ Un château peut produire des seigneurs, des guerriers ou des paysans en consomm
 Un château ne peut ni se déplacer ni attaquer mais produit de l’or passivement.
 */
 
-Chateau::Chateau(int x, int y) : Pion(x, y, 20) { 
+Chateau::Chateau(int x, int y, int couleur) : Pion(x, y, 20) { 
     icon = 'C';
+    color = couleur;
     puiss = 0;
     depl = 0;   // Château ne se déplace pas
     prod = 2;
@@ -52,9 +56,10 @@ void Chateau::genererOr() {
 Un paysan peut se déplacer ou produire des ressources.
 */
 
-Paysan::Paysan(int x, int y) : Pion(x, y, 1) { 
+Paysan::Paysan(int x, int y, int couleur) : Pion(x, y, 1) { 
     icon = 'P';
     puiss = 0;
+    color = couleur;
     depl = 2;
     prod = 5;
     cout = 20;
@@ -69,9 +74,10 @@ Un seigneur peut se déplacer et attaquer ou consommer de l’or pour se constru
 cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se transformer en château).
 */
 
-Seigneur::Seigneur(int x, int y) : Pion(x, y, 5) { 
+Seigneur::Seigneur(int x, int y, int couleur) : Pion(x, y, 5) { 
     icon = 'S';
     puiss = 3;
+    color = couleur;
     depl = 1;
     prod = 0;
     cout = 10;
