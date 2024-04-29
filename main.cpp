@@ -1,9 +1,11 @@
-#include "jeu.h"
 #include <iostream>
+#include "jeu.h"
+#include "pion.h"
 
 int main()
 {
     Jeu J;
-    std::cout << "Test réussi, temps d'accès moyen à un élément : " << std::endl;
+    Guerrier G(12,0);
+    std::cout << G.getPv() << std::endl;
     return 0;
 }
