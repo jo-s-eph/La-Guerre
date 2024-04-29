@@ -8,7 +8,7 @@ void Pion::deplacer(int newX, int newY) {
 }
 
 void Pion::attaquer(Pion& cible) {
-    cible.pv -= 5; 
+    cible.pv -= this->puiss ; 
 }
 
 int Pion::getX() const { return x; }
