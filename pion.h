@@ -1,6 +1,13 @@
 #pragma once   // Prévient les inclusions multiples
 #include <string>
 
+enum class PionType {
+    Chateau,
+    Seigneur,
+    Guerrier,
+    Paysan
+};
+
 class Pion {
 public:
     Pion(int x, int y, int pv);
