@@ -7,14 +7,9 @@ void Joueur::deplacerPion(Pion* pion, int x, int y) {
 }
 
 void Joueur::produirePion(Pion* chateau, PionType type) {
-    if (dynamic_cast<Chateau*>(chateau) != nullptr) {
-        // Code to be executed if chateau is of type Chateau
+    if (dynamic_cast<Chateau*>(chateau) != nullptr) { // if chateau is of type Chateau
     }
-    // Logique pour produire un pion en dépensant de l'or
-    // if (gold >= coutProductionPion) {
-    //     chateau->produirePion(type);
-    //     gold -= coutProductionPion;  // Réduire l'or du joueur
-    // }
+    
 }
 
 void Joueur::attaquer(Pion* attaquant, Pion* cible) {

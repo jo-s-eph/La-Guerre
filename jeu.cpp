@@ -1,14 +1,9 @@
 #include "jeu.h"
 #include <iostream>
+#include "utils.h"
 
-#define TAILLE 20
-#define RESET   "\033[0m"
-#define RED     "\033[1m\033[31m"
-#define BLUE    "\033[1m\033[34m"
-#define GREY    "\033[90m"
-#define YELLOW  "\033[1m\033[33m"
 
-Jeu::Jeu() : Joueur1(1, 20, "Rouge"), Joueur2(0, 20, "Bleu") {
+Jeu::Jeu() : Joueur1(1, 20, "Rouge"), Joueur2(0, 20, "Bleu"), nbtour(0) {
     initialiserPlateau();
 }
 
@@ -16,15 +11,16 @@ void Jeu::initialiserPlateau() {
     plateau.resize(TAILLE, std::vector<Pion*>(TAILLE, nullptr));
 
     Chateau* chateauRouge = new Chateau(1);
+    C1 = chateauRouge;
     Paysan* paysanRouge = new Paysan(1);
-    placerPion(chateauRouge,1,1);
-    placerPion(paysanRouge,2,2);
+    placerPion(chateauRouge,10,1);
+    placerPion(paysanRouge,11,1);
 
     Chateau* chateauBleu = new Chateau(0);
+    C2 = chateauBleu;
     Paysan* paysanBleu = new Paysan(0);
-    placerPion(chateauBleu,20,20);
-    placerPion(paysanBleu,19,19);
-    deplacerPion(19,19,3,13);
+    placerPion(chateauBleu,10,20);
+    placerPion(paysanBleu,11,20);
 }
 
 void Jeu::demarrer() {
