@@ -15,11 +15,11 @@ Jeu::Jeu() : rouge(1, 20, "Rouge"), bleu(0, 20, "Bleu") {
 void Jeu::initialiserPlateau() {
     plateau.resize(TAILLE, std::vector<Pion*>(TAILLE, nullptr));
 
-    Chateau* chateauRouge = new Chateau(5, 5, 1);
+    Chateau* chateauRouge = new Chateau(1, 1, 1);
     Paysan* paysanRouge = new Paysan(6, 6, 1);
     rouge.ajouterPion(chateauRouge);
     rouge.ajouterPion(paysanRouge);
-    plateau[5][5] = chateauRouge;
+    plateau[1][1] = chateauRouge;
     plateau[6][6] = paysanRouge;
 
     Chateau* chateauBleu = new Chateau(15, 15, 0);
@@ -38,26 +38,30 @@ void Jeu::demarrer() {
 }
 
 void Jeu::afficherEtatJeu() {
+    std::cout << "\n";
     for (int i = 0; i < TAILLE; ++i) {
         std::cout << TAILLE - i << "\t"; // display X coord on the left
         for (int j = 0; j < TAILLE; ++j) {
             if (plateau[i][j] != nullptr) {
                 if (plateau[i][j]->getColor())
-                    std::cout << RED << plateau[i][j]->getIcon() << RESET;
+                    std::cout << RED << plateau[i][j]->getIcon() << " " << RESET;
                 else
-                    std::cout << BLUE << plateau[i][j]->getIcon() << RESET ;                
+                    std::cout << BLUE << plateau[i][j]->getIcon() << " " << RESET;                
             } else {
-                std::cout << GREY << "-" << RESET;
+                std::cout << GREY << "- " << RESET;
             }
-            if (j < TAILLE - 1) {
+            if (j < TAILLE - 1)
                 std::cout << " ";
-            }
         }
         std::cout << std::endl;
     }
-    std::cout << "\t"; // display Y at the bottom of the grid
+    std::cout << "\n\t";
     for (int j = 0; j < TAILLE; ++j) {
-        std::cout << j+1 << " "; // display Y at the bottom of the grid
+        std::cout << j+1 << " ";
+        if (j+1 < 9)
+        {
+             std::cout << " ";
+        }
     }
     std::cout << std::endl;
 }
