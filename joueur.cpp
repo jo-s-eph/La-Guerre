@@ -1,17 +1,15 @@
 #include "joueur.h"
 
-Joueur::Joueur(int id, int gold, const std::string& nom) : id(id), gold(gold), nom(nom) {
-}
-
-void Joueur::ajouterPion(Pion* pion) {
-    pions.push_back(pion);
-}
+Joueur::Joueur(int id, int gold, const std::string& nom) : id(id), gold(gold), nom(nom) {}
 
 void Joueur::deplacerPion(Pion* pion, int x, int y) {
     pion->deplacer(x, y);
 }
 
 void Joueur::produirePion(Pion* chateau, PionType type) {
+    if (dynamic_cast<Chateau*>(chateau) != nullptr) {
+        // Code to be executed if chateau is of type Chateau
+    }
     // Logique pour produire un pion en dépensant de l'or
     // if (gold >= coutProductionPion) {
     //     chateau->produirePion(type);

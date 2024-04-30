@@ -10,7 +10,7 @@ enum class PionType {
 
 class Pion {
 public:
-    Pion(int x, int y, int pv);
+    Pion(int couleur);
 
     virtual ~Pion() = default;
     virtual void deplacer(int newX, int newY);
@@ -18,6 +18,8 @@ public:
     
     int getX() const;
     int getY() const;
+    void setX(int newx);
+    void setY(int newy);
     int getPv() const;
     int getColor() const;
     char getIcon() const;
@@ -40,7 +42,7 @@ Un guerrier peut se déplacer et attaquer.
 class Guerrier : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Guerrier(int x, int y, int color);
+    Guerrier(int couleur);
     // virtual void deplacer(int newX, int newY) override;
 };
 
@@ -52,7 +54,7 @@ Un château ne peut ni se déplacer ni attaquer mais produit de l’or passiveme
 class Chateau : public Pion {   
     // Déclaration de la classe Chateau héritant de Pion
 public:
-    Chateau(int x, int y, int color);
+    Chateau(int couleur);
     void produirePion();    // Méthode spé à Chateau
     void genererOr();       // Méthode spé à Chateau
     // virtual void deplacer(int newX, int newY) override;
@@ -65,7 +67,7 @@ Un paysan peut se déplacer ou produire des ressources.
 class Paysan : public Pion {   
     // Déclaration de la classe Paysan héritant de Pion
 public:
-    Paysan(int x, int y, int color);
+    Paysan(int couleur);
     void genererOr();       // Méthode spé à Paysan
     // virtual void deplacer(int newX, int newY) override;
 };
@@ -78,6 +80,6 @@ cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se tran
 class Seigneur : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Seigneur(int x, int y, int color);
+    Seigneur(int couleur);
     void transformation();       // Méthode spé à Seigneur
 };

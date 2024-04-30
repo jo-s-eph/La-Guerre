@@ -1,6 +1,6 @@
 #include "pion.h"
 
-Pion::Pion(int x, int y, int pv) : x(x), y(y), pv(pv) {}
+Pion::Pion(int couleur) : color(couleur) {}
 
 void Pion::deplacer(int newX, int newY) {
     x = newX;
@@ -12,7 +12,9 @@ void Pion::attaquer(Pion& cible) {
 }
 
 int Pion::getX() const { return x; }
+void Pion::setX(int newx) { this->x = newx; }
 int Pion::getY() const { return y; }
+void Pion::setY(int newy) { this->y = newy; }
 char Pion::getIcon() const { return icon; }
 int Pion::getPv() const { return pv; }
 int Pion::getColor() const { return color; }
@@ -21,27 +23,27 @@ int Pion::getColor() const { return color; }
 Un guerrier peut se déplacer et attaquer.
 */
 
-Guerrier::Guerrier(int x, int y, int couleur) : Pion(x, y, 10) { 
+Guerrier::Guerrier(int couleur) : Pion(couleur) {
     icon = 'G';
-    color = couleur;
     puiss = 5;
     depl = 3;
-    prod = 0;   // Guerrier ne produit rien
+    pv = 10;
+    prod = 0;
     cout = 10;
 }
-
 /*
 Un château peut produire des seigneurs, des guerriers ou des paysans en consommant l’or de l’équipe. 
 Un château ne peut ni se déplacer ni attaquer mais produit de l’or passivement.
 */
 
-Chateau::Chateau(int x, int y, int couleur) : Pion(x, y, 20) { 
+Chateau::Chateau(int couleur) : Pion(couleur) { 
     icon = 'C';
-    color = couleur;
     puiss = 0;
     depl = 0;   // Château ne se déplace pas
     prod = 2;
     cout = 15;   // Coût en or pour produire (supposé)
+    pv = 20;
+    color = couleur;
 }
 
 void Chateau::produirePion() {
@@ -56,13 +58,14 @@ void Chateau::genererOr() {
 Un paysan peut se déplacer ou produire des ressources.
 */
 
-Paysan::Paysan(int x, int y, int couleur) : Pion(x, y, 1) { 
+Paysan::Paysan(int couleur) : Pion(couleur) { 
     icon = 'P';
     puiss = 0;
-    color = couleur;
     depl = 2;
     prod = 5;
     cout = 20;
+    pv = 1;
+    color = couleur;
 }
 
 void Paysan::genererOr() {
@@ -74,13 +77,14 @@ Un seigneur peut se déplacer et attaquer ou consommer de l’or pour se constru
 cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se transformer en château).
 */
 
-Seigneur::Seigneur(int x, int y, int couleur) : Pion(x, y, 5) { 
+Seigneur::Seigneur(int couleur) : Pion(couleur) { 
     icon = 'S';
     puiss = 3;
-    color = couleur;
     depl = 1;
     prod = 0;
     cout = 10;
+    pv = 5;
+    color = couleur;
 }
 
 void Seigneur::transformation() {
