@@ -16,8 +16,11 @@ public:
     void deplacerPion(int x, int y, int newx, int newy);
 
 private:
-    std::vector<std::vector<Pion*>> plateau;
-    Joueur rouge;
-    Joueur bleu;
     void initialiserPlateau();
+    friend class Joueur;
+    std::vector<std::vector<Pion*>> plateau;
+    Joueur Joueur1;
+    Joueur Joueur2;
 };
+
+#endif // JEU_H

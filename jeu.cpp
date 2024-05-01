@@ -1,33 +1,29 @@
 #include "jeu.h"
-#include <iostream>
-#include <iomanip> // std::setw
 
 #define TAILLE 20
 #define RESET   "\033[0m"
-#define RED     "\033[31m"
-#define BLUE    "\033[34m"
+#define RED     "\033[1m\033[31m"
+#define BLUE    "\033[1m\033[34m"
 #define GREY    "\033[90m"
+#define YELLOW  "\033[1m\033[33m"
 
-Jeu::Jeu() : rouge(1, 20, "Rouge"), bleu(0, 20, "Bleu") {
+Jeu::Jeu() : Joueur1(1, 20, "Rouge"), Joueur2(0, 20, "Bleu") {
     initialiserPlateau();
 }
 
 void Jeu::initialiserPlateau() {
     plateau.resize(TAILLE, std::vector<Pion*>(TAILLE, nullptr));
 
-    Chateau* chateauRouge = new Chateau(1, 1, 1);
-    Paysan* paysanRouge = new Paysan(6, 6, 1);
-    rouge.ajouterPion(chateauRouge);
-    rouge.ajouterPion(paysanRouge);
-    plateau[1][1] = chateauRouge;
-    plateau[6][6] = paysanRouge;
+    Chateau* chateauRouge = new Chateau(1,this);
+    Paysan* paysanRouge = new Paysan(1,this);
+    placerPion(chateauRouge,1,1);
+    placerPion(paysanRouge,2,2);
 
-    Chateau* chateauBleu = new Chateau(15, 15, 0);
-    Paysan* paysanBleu = new Paysan(16, 16, 0);
-    bleu.ajouterPion(chateauBleu);
-    bleu.ajouterPion(paysanBleu);
-    plateau[15][15] = chateauBleu;
-    plateau[16][16] = paysanBleu;
+    Chateau* chateauBleu = new Chateau(0,this);
+    Paysan* paysanBleu = new Paysan(0,this);
+    placerPion(chateauBleu,20,20);
+    placerPion(paysanBleu,19,19);
+    deplacerPion(19,19,3,13);
 }
 
 void Jeu::demarrer() {
