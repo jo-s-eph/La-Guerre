@@ -22,15 +22,15 @@ class Pion {
 public:
     Pion(int couleur, JeuInterface& j) : color(couleur), jeu(j) {}
     virtual ~Pion() = default;
-    virtual void deplacer(int newx, int newy);
-    virtual void attaquer();
-    virtual void genererOr();       // Méthode spé à Chateau
+    virtual int deplacer();
+    virtual int attaquer();
+    virtual int genererOr();       // Méthode spé à Chateau
     
     int getX() const;
     int getY() const;
     void setX(int newx);
     void setY(int newy);
-    void setPv(int newpv);
+    void addPv(int newpv);
     int getPv() const;
     int getColor() const;
     char getIcon() const;
@@ -66,7 +66,7 @@ class Chateau : public Pion {
     // Déclaration de la classe Chateau héritant de Pion
 public:
     Chateau(int couleur, JeuInterface& j);
-    void produirePion();    // Méthode spé à Chateau
+    int produirePion();    // Méthode spé à Chateau
     // virtual void deplacer(int newX, int newY) override;
 };
 
@@ -89,7 +89,7 @@ class Seigneur : public Pion {
     // Déclaration de la classe Guerrier héritant de Pion
 public:
     Seigneur(int couleur, JeuInterface& j);
-    void transformation();       // Méthode spé à Seigneur
+    int transformation();       // Méthode spé à Seigneur
 };
 
 #endif // PION_H

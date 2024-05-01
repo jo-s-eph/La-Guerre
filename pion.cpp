@@ -8,9 +8,10 @@ char Pion::getIcon() const { return icon; }
 
 void Pion::setX(int newx) { this->x = newx; }
 void Pion::setY(int newy) { this->y = newy; }
-void Pion::setPv(int newpv) { this->pv = newpv; }
+void Pion::addPv(int newpv) { this->pv += newpv; }
 
-void Pion::deplacer(int newX, int newY) {
+int Pion::deplacer()
+{
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE)
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
 
@@ -41,7 +42,7 @@ void Pion::deplacer(int newX, int newY) {
         }
     }
 
-    jeu.afficherDepl(adjacentes);
+    jeu.afficherCases(adjacentes);
     while (true) {
         std::cout << " ☞ Où souhaitez vous déplacer votre pion "<< this->getIcon() << " ? (x y): ";
         std::cin >> userx >> usery;
@@ -54,13 +55,15 @@ void Pion::deplacer(int newX, int newY) {
                 jeu.deplacerPion(x,y,userx,usery);
                 std::cout << " ☞ Pion déplacé ! " << std::endl;
                 ordre = true;
-                return;
+                return 1;
             }
         }
     }
+    return 0;
 }
 
-void Pion::attaquer() {
+int Pion::attaquer()
+{
     std::vector<std::pair<int, int>> adjacentes;
     std::vector<std::pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Haut, droite, bas, gauche
     int userx, usery;
@@ -75,7 +78,7 @@ void Pion::attaquer() {
     if (adjacentes.size() == 0)
     {
         std::cout << " ☞ Aucun pion proche à attaquer. " << std::endl;;
-        return;
+        return 0;
     }
     while (true) {
         std::cout << " ☞ Quel pion souhaitez-vous attaquer avec "<< this->getIcon() << " ? (x y): ";
@@ -87,7 +90,7 @@ void Pion::attaquer() {
                 std::cerr << " ✕ : Case inaccessible." << std::endl;
             } else {
                 Pion* cible = jeu.getPion(userx,usery);
-                cible->setPv(cible->getPv() - puiss);
+                cible->addPv(-puiss);
                 std::cout << " ☞ Pion attaqué ! "<< RED << "-"<< puiss << " PV "<< RESET << "au pion "<< cible->getIcon() << "." << std::endl;
                 if (cible->getPv() <= 0)
                 {
@@ -95,19 +98,20 @@ void Pion::attaquer() {
                     std::cout << " ☞ Le pion "<< cible->getIcon() << " a succombé à l'attaque." << std::endl;
                 }
                 ordre = true;
-                return;
+                return 1;
             }
         }
     }
 }
 
-void Pion::genererOr()
+int Pion::genererOr()
 {
     Joueur* player = jeu.getJoueur2();
     if (getColor()){ player = jeu.getJoueur1();}
-    player->ajouterOr(prod);
+    player->addOr(prod);
     std::cout << " ☞ Le pion "<< getIcon() << " vient de produire" << YELLOW << prod << RESET << "pièces d'or.";
     if (getIcon() == 'P') { ordre = true; } // Car le château génère de l'or passivement
+    return 1;
 }
 
 /*
@@ -141,7 +145,7 @@ Chateau::Chateau(int couleur, JeuInterface& j) : Pion(couleur, j) {
     jeu = j;
 }
 
-void Chateau::produirePion() {
+int Chateau::produirePion() {
     std::vector<std::pair<int, int>> adjacentes;
     std::vector<std::pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Haut, droite, bas, gauche
     int userx, usery;
@@ -157,10 +161,10 @@ void Chateau::produirePion() {
     if (adjacentes.size() == 0)
     {
         std::cout << " ☞ Aucun case adjacente de libre pour produire un pion." << std::endl;;
-        return;
+        return 0;
     }
 
-    jeu.afficherDepl(adjacentes);
+    jeu.afficherCases(adjacentes);
 
     while (true) {
         std::cout << " ☞ Sur quelle case souhaitez-vous produire un pion ? (x y): ";
@@ -184,7 +188,7 @@ void Chateau::produirePion() {
                     {
                         Seigneur* s = new Seigneur(getColor(), jeu);
                         jeu.placerPion(s, userx, usery);
-                        player->ajouterOr(-10);
+                        player->addOr(-10);
                     }
                 } else if (choix == 'G') {
                     if (player->getOr() < 10)
@@ -193,7 +197,7 @@ void Chateau::produirePion() {
                     {
                     Guerrier* g = new Guerrier(getColor(), jeu);
                     jeu.placerPion(g, userx, usery);
-                    player->ajouterOr(-10);
+                    player->addOr(-10);
                     }
                 } else if (choix == 'P') {
                     if (player->getOr() < 20)
@@ -202,17 +206,18 @@ void Chateau::produirePion() {
                     {
                     Paysan* p = new Paysan(getColor(), jeu);
                     jeu.placerPion(p, userx, usery);
-                    player->ajouterOr(-20);
+                    player->addOr(-20);
                     }
                 } else {
                     std::cerr << " ✕ : Erreur, choix invalide." << std::endl;
                 }
                 std::cout << " ☞ Le pion a été généré avec succès à la case (" << userx << ", " << usery << ")." << std::endl;
                 ordre = true;
-                return;
+                return 1;
             }
         }
     }
+    return 0;
 }
 
 /*
@@ -246,7 +251,7 @@ Seigneur::Seigneur(int couleur, JeuInterface& j) : Pion(couleur, j) {
     jeu = j;
 }
 
-void Seigneur::transformation() {
+int Seigneur::transformation() {
     Joueur* player = jeu.getJoueur2();
     if (getColor()){ player = jeu.getJoueur1();}
 
@@ -259,8 +264,10 @@ void Seigneur::transformation() {
         chateau->setY(y);
         jeu.supprimerPion(x,y);
         jeu.placerPion(chateau, x, y);
-        player->ajouterOr(-15);
+        player->addOr(-15);
         std::cout << "  ☞  Le seigneur s'est transformé en château !" << std::endl;
         ordre = true;
+        return 1;
     }
+    return 0;
 }

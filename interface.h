@@ -10,7 +10,7 @@ public:
     virtual void afficherEtatJeu() = 0;
     virtual void afficherGrille() = 0;
     virtual void afficherOr() = 0;
-    virtual void afficherDepl(const std::vector<std::pair<int, int>>& cases) = 0;
+    virtual void afficherCases(const std::vector<std::pair<int, int>>& cases) = 0;
 
     virtual void placerPion(Pion* pion, int x, int y) = 0;
     virtual void supprimerPion(int x, int y) = 0;

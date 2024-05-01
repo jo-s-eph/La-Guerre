@@ -16,7 +16,7 @@ public:
 
     void afficherEtatJeu();
     void afficherGrille();
-    void afficherDepl(const std::vector<std::pair<int, int>>& cases);
+    void afficherCases(const std::vector<std::pair<int, int>>& cases);
     void afficherOr();
     void placerPion(Pion* pion, int x, int y);
     void supprimerPion(int x, int y);
