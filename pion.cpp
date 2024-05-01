@@ -1,7 +1,5 @@
 #include "pion.h"
 
-Pion::Pion(int couleur) : color(couleur) {}
-
 void Pion::deplacer(int newX, int newY) {
     x = newX;
     y = newY;
@@ -23,20 +21,22 @@ int Pion::getColor() const { return color; }
 Un guerrier peut se déplacer et attaquer.
 */
 
-Guerrier::Guerrier(int couleur) : Pion(couleur) {
+Guerrier::Guerrier(int couleur, Jeu* j) : Pion(couleur, j) {
     icon = 'G';
     puiss = 5;
     depl = 3;
     pv = 10;
     prod = 0;
     cout = 10;
+    color = couleur;
+    jeu = j;
 }
 /*
 Un château peut produire des seigneurs, des guerriers ou des paysans en consommant l’or de l’équipe. 
 Un château ne peut ni se déplacer ni attaquer mais produit de l’or passivement.
 */
 
-Chateau::Chateau(int couleur) : Pion(couleur) { 
+Chateau::Chateau(int couleur, Jeu* j) : Pion(couleur, j) { 
     icon = 'C';
     puiss = 0;
     depl = 0;   // Château ne se déplace pas
@@ -44,6 +44,7 @@ Chateau::Chateau(int couleur) : Pion(couleur) {
     cout = 15;   // Coût en or pour produire (supposé)
     pv = 20;
     color = couleur;
+    jeu = j;
 }
 
 void Chateau::produirePion() {
@@ -58,7 +59,7 @@ void Chateau::genererOr() {
 Un paysan peut se déplacer ou produire des ressources.
 */
 
-Paysan::Paysan(int couleur) : Pion(couleur) { 
+Paysan::Paysan(int couleur, Jeu* j) : Pion(couleur, j) { 
     icon = 'P';
     puiss = 0;
     depl = 2;
@@ -66,6 +67,7 @@ Paysan::Paysan(int couleur) : Pion(couleur) {
     cout = 20;
     pv = 1;
     color = couleur;
+    jeu = j;
 }
 
 void Paysan::genererOr() {
@@ -77,7 +79,7 @@ Un seigneur peut se déplacer et attaquer ou consommer de l’or pour se constru
 cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se transformer en château).
 */
 
-Seigneur::Seigneur(int couleur) : Pion(couleur) { 
+Seigneur::Seigneur(int couleur, Jeu* j) : Pion(couleur, j) { 
     icon = 'S';
     puiss = 3;
     depl = 1;
@@ -85,6 +87,7 @@ Seigneur::Seigneur(int couleur) : Pion(couleur) {
     cout = 10;
     pv = 5;
     color = couleur;
+    jeu = j;
 }
 
 void Seigneur::transformation() {

@@ -1,6 +1,10 @@
-#include "pion.h"
-#include "joueur.h"
+#ifndef JEU_H
+#define JEU_H
+
+#include <iostream>
 #include <vector>
+#include "joueur.h"
+#include "pion.h"
 
 class Jeu {
 public:
@@ -12,12 +16,8 @@ public:
     void deplacerPion(int x, int y, int newx, int newy);
 
 private:
-    friend class Joueur;
-    void initialiserPlateau();
     std::vector<std::vector<Pion*>> plateau;
-    Joueur Joueur1;
-    Joueur Joueur2;
-    int nbtour;
-    Chateau* C1;
-    Chateau* C2;
-}; 
+    Joueur rouge;
+    Joueur bleu;
+    void initialiserPlateau();
+};

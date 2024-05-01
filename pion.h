@@ -1,5 +1,7 @@
-#pragma once   // Prévient les inclusions multiples
-#include <string>
+#ifndef PION_H
+#define PION_H
+
+class Jeu;
 
 enum class PionType {
     Chateau,
@@ -10,7 +12,7 @@ enum class PionType {
 
 class Pion {
 public:
-    Pion(int couleur);
+    Pion(int x, int y, int pv);
 
     virtual ~Pion() = default;
     virtual void deplacer(int newX, int newY);
@@ -33,6 +35,7 @@ protected:
     int depl;   // Nb maximum de cases parcourues par le pion à chaque tour
     int prod;   // Qté d’or produite par le pion (lors d’une action pour un paysan)/
     int cout;   // Coût en or pour construire un pion de ce type.
+    Jeu* jeu;   // Jeu dans lequel le pion est présent
 };
 
 /*
@@ -42,7 +45,7 @@ Un guerrier peut se déplacer et attaquer.
 class Guerrier : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Guerrier(int couleur);
+    Guerrier(int x, int y, int color);
     // virtual void deplacer(int newX, int newY) override;
 };
 
@@ -54,7 +57,7 @@ Un château ne peut ni se déplacer ni attaquer mais produit de l’or passiveme
 class Chateau : public Pion {   
     // Déclaration de la classe Chateau héritant de Pion
 public:
-    Chateau(int couleur);
+    Chateau(int x, int y, int color);
     void produirePion();    // Méthode spé à Chateau
     void genererOr();       // Méthode spé à Chateau
     // virtual void deplacer(int newX, int newY) override;
@@ -67,7 +70,7 @@ Un paysan peut se déplacer ou produire des ressources.
 class Paysan : public Pion {   
     // Déclaration de la classe Paysan héritant de Pion
 public:
-    Paysan(int couleur);
+    Paysan(int x, int y, int color);
     void genererOr();       // Méthode spé à Paysan
     // virtual void deplacer(int newX, int newY) override;
 };
@@ -80,6 +83,8 @@ cas rentre dedans pour ne plus en sortir (autrement dit un seigneur peut se tran
 class Seigneur : public Pion {   
     // Déclaration de la classe Guerrier héritant de Pion
 public:
-    Seigneur(int couleur);
+    Seigneur(int x, int y, int color);
     void transformation();       // Méthode spé à Seigneur
 };
+
+#endif // PION_H
