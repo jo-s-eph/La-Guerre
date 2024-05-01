@@ -11,8 +11,10 @@ void Jeu::initialiserPlateau() {
     Chateau* chateauRouge = new Chateau(1,*this);
     Paysan* paysanRouge = new Paysan(1,*this);
     Guerrier* guerrierRouge = new Guerrier(1,*this);
+    Seigneur* seigneurRouge = new Seigneur(1,*this);
     placerPion(chateauRouge,1,1);
     placerPion(paysanRouge,2,2);
+    placerPion(seigneurRouge,10,10);
 
     Chateau* chateauBleu = new Chateau(0,*this);
     Paysan* paysanBleu = new Paysan(0,*this);
@@ -20,9 +22,12 @@ void Jeu::initialiserPlateau() {
     placerPion(paysanBleu,19,19);
     deplacerPion(19,19,3,13);
     placerPion(guerrierRouge,2,16);
+
     // guerrierRouge->deplacer(7,7);
     afficherEtatJeu();
-    chateauBleu->produirePion();
+    // chateauBleu->produirePion();
+    seigneurRouge->transformation();
+
     // guerrierRouge->attaquer();
 }
 

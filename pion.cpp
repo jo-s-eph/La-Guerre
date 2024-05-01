@@ -102,6 +102,14 @@ void Pion::attaquer() {
     }
 }
 
+void Pion::genererOr()
+{
+    Joueur* player = jeu.getJoueur2();
+    if (getColor()){ player = jeu.getJoueur1();}
+    player->ajouterOr(prod);
+    std::cout << " ☞ Le pion "<< getIcon() << " vient de produire" << YELLOW << prod << RESET << "pièces d'or.";
+}
+
 /*
 Un guerrier peut se déplacer et attaquer.
 */
@@ -171,17 +179,32 @@ void Chateau::produirePion() {
                 if (getColor()){ player = jeu.getJoueur1();}
                 
                 if (choix == 'S') {
-                    Seigneur* s = new Seigneur(getColor(), jeu);
-                    jeu.placerPion(s, userx, usery);
-                    player->ajouterOr(-10);
+                    if (player->getOr() < 10)
+                        std::cerr << " ✕ : Vous n'avez pas assez d'or pour produire un seigneur." << std::endl;
+                    else
+                    {
+                        Seigneur* s = new Seigneur(getColor(), jeu);
+                        jeu.placerPion(s, userx, usery);
+                        player->ajouterOr(-10);
+                    }
                 } else if (choix == 'G') {
+                    if (player->getOr() < 10)
+                        std::cerr << " ✕ : Vous n'avez pas assez d'or pour produire un guerrier." << std::endl;
+                    else
+                    {
                     Guerrier* g = new Guerrier(getColor(), jeu);
                     jeu.placerPion(g, userx, usery);
                     player->ajouterOr(-10);
+                    }
                 } else if (choix == 'P') {
+                    if (player->getOr() < 20)
+                        std::cerr << " ✕ : Vous n'avez pas assez d'or pour produire un seigneur." << std::endl;
+                    else
+                    {
                     Paysan* p = new Paysan(getColor(), jeu);
                     jeu.placerPion(p, userx, usery);
                     player->ajouterOr(-20);
+                    }
                 } else {
                     std::cerr << " ✕ : Erreur, choix invalide." << std::endl;
                 }
@@ -191,10 +214,6 @@ void Chateau::produirePion() {
             }
         }
     }
-}
-
-void Chateau::genererOr() {
-    // Logique pr générer de l'or
 }
 
 /*
@@ -210,10 +229,6 @@ Paysan::Paysan(int couleur, JeuInterface& j) : Pion(couleur, j) {
     pv = 1;
     color = couleur;
     jeu = j;
-}
-
-void Paysan::genererOr() {
-    // Logique pr générer de l'or
 }
 
 /*
@@ -233,5 +248,20 @@ Seigneur::Seigneur(int couleur, JeuInterface& j) : Pion(couleur, j) {
 }
 
 void Seigneur::transformation() {
-    // Logique pr se transformer en chateau
+    Joueur* player = jeu.getJoueur2();
+    if (getColor()){ player = jeu.getJoueur1();}
+
+    if (player->getOr() < 15)
+        std::cerr << " ✕ : Vous n'avez pas assez d'or pour transformer votre seigneur en château." << std::endl;
+    else
+    {
+        Chateau* chateau = new Chateau(getColor(), jeu);
+        chateau->setX(x);
+        chateau->setY(y);
+        jeu.supprimerPion(x,y);
+        jeu.placerPion(chateau, x, y);
+        player->ajouterOr(-15);
+        jeu.afficherEtatJeu();
+        std::cout << "  ☞  Le seigneur s'est transformé en château !" << std::endl;
+    }
 }

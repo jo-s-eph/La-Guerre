@@ -24,6 +24,7 @@ public:
     virtual ~Pion() = default;
     virtual void deplacer(int newx, int newy);
     virtual void attaquer();
+    virtual void genererOr();       // Méthode spé à Chateau
     
     int getX() const;
     int getY() const;
@@ -65,7 +66,6 @@ class Chateau : public Pion {
 public:
     Chateau(int couleur, JeuInterface& j);
     void produirePion();    // Méthode spé à Chateau
-    void genererOr();       // Méthode spé à Chateau
     // virtual void deplacer(int newX, int newY) override;
 };
 
@@ -77,8 +77,6 @@ class Paysan : public Pion {
     // Déclaration de la classe Paysan héritant de Pion
 public:
     Paysan(int couleur, JeuInterface& j);
-    void genererOr();       // Méthode spé à Paysan
-    // virtual void deplacer(int newX, int newY) override;
 };
 
 /*
