@@ -3,6 +3,7 @@
 #include <iostream>
 
 class Pion;
+class Joueur;
 
 class JeuInterface {
 public:
@@ -15,8 +16,9 @@ public:
     virtual void supprimerPion(int x, int y) = 0;
     virtual void deplacerPion(int x, int y, int newx, int newy) = 0;
     virtual Pion* getPion(int x, int y) = 0;
+    virtual Joueur* getJoueur1() = 0;
+    virtual Joueur* getJoueur2() = 0;
 
     virtual bool estOccupee(int x, int y) = 0;
-
     virtual ~JeuInterface() {}
 };

@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "interface.h"
+#include "joueur.h"
 #include <iostream>
 #include <vector>
 #include <queue>

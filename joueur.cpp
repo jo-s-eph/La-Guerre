@@ -11,13 +11,13 @@ void Joueur::deplacerPion(Pion* pion, int x, int y) {
     pion->deplacer(x, y);
 }
 
-void Joueur::produirePion(Pion* chateau, PionType type) {
-    // Logique pour produire un pion en dépensant de l'or
-    // if (gold >= coutProductionPion) {
-    //     chateau->produirePion(type);
-    //     gold -= coutProductionPion;  // Réduire l'or du joueur
-    // }
-}
+// void Joueur::produirePion(Pion* chateau, PionType type) {
+//     // Logique pour produire un pion en dépensant de l'or
+//     // if (gold >= coutProductionPion) {
+//     //     chateau->produirePion(type);
+//     //     gold -= coutProductionPion;  // Réduire l'or du joueur
+//     // }
+// }
 
 void Joueur::attaquer(Pion* attaquant, Pion* cible) {
     attaquant->attaquer();

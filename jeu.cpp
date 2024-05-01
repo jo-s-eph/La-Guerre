@@ -20,9 +20,10 @@ void Jeu::initialiserPlateau() {
     placerPion(paysanBleu,19,19);
     deplacerPion(19,19,3,13);
     placerPion(guerrierRouge,2,16);
-    guerrierRouge->deplacer(7,7);
+    // guerrierRouge->deplacer(7,7);
     afficherEtatJeu();
-    guerrierRouge->attaquer();
+    chateauBleu->produirePion();
+    // guerrierRouge->attaquer();
 }
 
 void Jeu::demarrer() {
@@ -34,6 +35,9 @@ Pion* Jeu::getPion(int x, int y){
     return plateau[x - 1][y - 1];
 }
 
+Joueur* Jeu::getJoueur1(){ return &Joueur1; }
+Joueur* Jeu::getJoueur2(){ return &Joueur2; }
+
 void Jeu::placerPion(Pion* pion, int x, int y){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
@@ -43,6 +47,7 @@ void Jeu::placerPion(Pion* pion, int x, int y){
         std::cerr << "Erreur : Case déjà occupée." << std::endl;
         return;
     }
+
     plateau[x - 1][y - 1] = pion;
     pion->setX(x);
     pion->setY(y);

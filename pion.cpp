@@ -1,5 +1,15 @@
 #include "pion.h"
 
+int Pion::getX() const { return x; }
+int Pion::getY() const { return y; }
+int Pion::getPv() const { return pv; }
+int Pion::getColor() const { return color; }
+char Pion::getIcon() const { return icon; }
+
+void Pion::setX(int newx) { this->x = newx; }
+void Pion::setY(int newy) { this->y = newy; }
+void Pion::setPv(int newpv) { this->pv = newpv; }
+
 void Pion::deplacer(int newX, int newY) {
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE)
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
@@ -92,15 +102,6 @@ void Pion::attaquer() {
     }
 }
 
-int Pion::getX() const { return x; }
-int Pion::getY() const { return y; }
-void Pion::setX(int newx) { this->x = newx; }
-void Pion::setY(int newy) { this->y = newy; }
-void Pion::setPv(int newpv) { this->pv = newpv; }
-char Pion::getIcon() const { return icon; }
-int Pion::getPv() const { return pv; }
-int Pion::getColor() const { return color; }
-
 /*
 Un guerrier peut se déplacer et attaquer.
 */
@@ -116,57 +117,6 @@ Guerrier::Guerrier(int couleur, JeuInterface& j) : Pion(couleur, j) {
     jeu = j;
 }
 
-// void Guerrier::deplacer(int newx, int newy) {
-    
-//     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE)
-//         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
-
-//     int userx, usery;
-//     std::vector<std::pair<int, int>> voisins;
-//     std::queue<std::pair<int, int>> queue;
-//     std::set<std::pair<int, int>> visited;
-
-//     queue.push({x, y});
-//     visited.insert({x, y});
-
-//     while (!queue.empty()) {
-//         auto current = queue.front();
-//         queue.pop();
-
-//         std::vector<std::pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-//         for (auto& dir : directions) {
-//             int nx = current.first + dir.first;
-//             int ny = current.second + dir.second;
-
-//             if (nx >= 1 && nx <= TAILLE && ny >= 1 && ny <= TAILLE && !jeu.estOccupee(nx, ny) &&
-//                 visited.find({nx, ny}) == visited.end() && manhattanDistance(x, y, nx, ny) <= depl) {
-                
-//                 queue.push({nx, ny});
-//                 visited.insert({nx, ny});
-//                 voisins.push_back({nx, ny});
-//             }
-//         }
-//     }
-
-//     jeu.afficherDepl(voisins);
-//     while (true) {
-//         std::cout << " ☞ Où souhaitez vous déplacer votre pion ? (x y): ";
-//         std::cin >> userx >> usery;
-//         if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
-//             std::cerr << " ✕ : Coordonnées hors du plateau, choissisez parmi les cases vertes." << std::endl;
-//         } else {
-//             if (std::find(voisins.begin(), voisins.end(), std::make_pair(userx, usery)) == voisins.end()) {
-//                 std::cerr << " ✕ : Case inaccessible, choissisez parmi les cases vertes." << std::endl;
-//             } else {
-//                 jeu.deplacerPion(x,y,userx,usery);
-//                 std::cout << " ☞ Pion déplacé ! " << std::endl;
-//                 jeu.afficherEtatJeu();
-//                 return;
-//             }
-//         }
-//     }
-    
-// }
 /*
 Un château peut produire des seigneurs, des guerriers ou des paysans en consommant l’or de l’équipe. 
 Un château ne peut ni se déplacer ni attaquer mais produit de l’or passivement.
@@ -184,7 +134,63 @@ Chateau::Chateau(int couleur, JeuInterface& j) : Pion(couleur, j) {
 }
 
 void Chateau::produirePion() {
-    // Logique pr produire un nouveau pion
+    std::vector<std::pair<int, int>> adjacentes;
+    std::vector<std::pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Haut, droite, bas, gauche
+    int userx, usery;
+    Pion* cible;
+
+    for (auto& dir : directions) {
+        int nx = x + dir.first;
+        int ny = y + dir.second;
+
+        if (nx >= 1 && nx <= TAILLE && ny >= 1 && ny <= TAILLE && !jeu.estOccupee(nx, ny))
+            adjacentes.push_back({nx, ny});
+    }
+    if (adjacentes.size() == 0)
+    {
+        std::cout << " ☞ Aucun case adjacente de libre pour produire un pion." << std::endl;;
+        jeu.afficherEtatJeu();
+        return;
+    }
+
+    jeu.afficherDepl(adjacentes);
+
+    while (true) {
+        std::cout << " ☞ Sur quelle case souhaitez-vous produire un pion ? (x y): ";
+        std::cin >> userx >> usery;
+        if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
+            std::cerr << " ✕ : Coordonnées hors du plateau, choissisez parmi les cases vertes." << std::endl;
+        } else {
+            if (std::find(adjacentes.begin(), adjacentes.end(), std::make_pair(userx, usery)) == adjacentes.end()) {
+                std::cerr << " ✕ : Case inaccessible, choissisez parmi les cases vertes." << std::endl;
+            } else {
+                char choix;
+                std::cout << "\t ☞ Quel pion souhaitez-vous produire ? (S, G, P): ";
+                std::cin >> choix;
+                Joueur* player = jeu.getJoueur2();
+                if (getColor()){ player = jeu.getJoueur1();}
+                
+                if (choix == 'S') {
+                    Seigneur* s = new Seigneur(getColor(), jeu);
+                    jeu.placerPion(s, userx, usery);
+                    player->ajouterOr(-10);
+                } else if (choix == 'G') {
+                    Guerrier* g = new Guerrier(getColor(), jeu);
+                    jeu.placerPion(g, userx, usery);
+                    player->ajouterOr(-10);
+                } else if (choix == 'P') {
+                    Paysan* p = new Paysan(getColor(), jeu);
+                    jeu.placerPion(p, userx, usery);
+                    player->ajouterOr(-20);
+                } else {
+                    std::cerr << " ✕ : Erreur, choix invalide." << std::endl;
+                }
+                std::cout << " ☞ Le pion a été généré avec succès à la case (" << userx << ", " << usery << ")." << std::endl;
+                jeu.afficherEtatJeu();
+                return;
+            }
+        }
+    }
 }
 
 void Chateau::genererOr() {
