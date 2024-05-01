@@ -6,7 +6,7 @@ BIN= jeu.exe
 
 all: $(CPPFILES)
 
-main: main.cpp pion.cpp jeu.cpp joueur.cpp
+main: main.cpp pion.cpp jeu.cpp joueur.cpp utils.cpp
 	$(CC) -o jeu.exe $^ $(CPPFLAGS)
 
 zip:

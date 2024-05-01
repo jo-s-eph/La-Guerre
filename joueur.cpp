@@ -20,7 +20,7 @@ void Joueur::produirePion(Pion* chateau, PionType type) {
 }
 
 void Joueur::attaquer(Pion* attaquant, Pion* cible) {
-    attaquant->attaquer(*cible);
+    attaquant->attaquer();
 }
 
 std::string Joueur::getNom() const {return nom;}

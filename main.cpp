@@ -6,6 +6,6 @@
 int main()
 {
     Jeu J;
-    J.afficherEtatJeu();
+    // J.afficherEtatJeu();
     return 0;
 }

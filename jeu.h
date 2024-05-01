@@ -5,15 +5,26 @@
 #include <vector>
 #include "joueur.h"
 #include "pion.h"
+#include "utils.h"
+#include "interface.h"
 
-class Jeu {
+
+class Jeu : public JeuInterface {
 public:
     Jeu();
     void demarrer();
+
     void afficherEtatJeu();
+    void afficherGrille();
+    void afficherDepl(const std::vector<std::pair<int, int>>& cases);
+    void afficherOr();
+
     void placerPion(Pion* pion, int x, int y);
     void supprimerPion(int x, int y);
     void deplacerPion(int x, int y, int newx, int newy);
+    Pion* getPion(int x, int y);
+
+    bool estOccupee(int x, int y);
 
 private:
     void initialiserPlateau();
