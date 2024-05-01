@@ -46,14 +46,14 @@ void Pion::deplacer(int newX, int newY) {
         std::cout << " ☞ Où souhaitez vous déplacer votre pion "<< this->getIcon() << " ? (x y): ";
         std::cin >> userx >> usery;
         if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
-            std::cerr << " ✕ : Coordonnées hors du plateau, choissisez parmi les cases vertes." << std::endl;
+            std::cerr << " ✕ : Coordonnées hors du plateau, choisisez parmi les cases vertes." << std::endl;
         } else {
             if (std::find(adjacentes.begin(), adjacentes.end(), std::make_pair(userx, usery)) == adjacentes.end()) {
-                std::cerr << " ✕ : Case inaccessible, choissisez parmi les cases vertes." << std::endl;
+                std::cerr << " ✕ : Case inaccessible, choisisez parmi les cases vertes." << std::endl;
             } else {
                 jeu.deplacerPion(x,y,userx,usery);
                 std::cout << " ☞ Pion déplacé ! " << std::endl;
-                jeu.afficherEtatJeu();
+                ordre = true;
                 return;
             }
         }
@@ -75,7 +75,6 @@ void Pion::attaquer() {
     if (adjacentes.size() == 0)
     {
         std::cout << " ☞ Aucun pion proche à attaquer. " << std::endl;;
-        jeu.afficherEtatJeu();
         return;
     }
     while (true) {
@@ -95,7 +94,7 @@ void Pion::attaquer() {
                     jeu.supprimerPion(userx,usery);
                     std::cout << " ☞ Le pion "<< cible->getIcon() << " a succombé à l'attaque." << std::endl;
                 }
-                jeu.afficherEtatJeu();
+                ordre = true;
                 return;
             }
         }
@@ -108,6 +107,7 @@ void Pion::genererOr()
     if (getColor()){ player = jeu.getJoueur1();}
     player->ajouterOr(prod);
     std::cout << " ☞ Le pion "<< getIcon() << " vient de produire" << YELLOW << prod << RESET << "pièces d'or.";
+    if (getIcon() == 'P') { ordre = true; } // Car le château génère de l'or passivement
 }
 
 /*
@@ -157,7 +157,6 @@ void Chateau::produirePion() {
     if (adjacentes.size() == 0)
     {
         std::cout << " ☞ Aucun case adjacente de libre pour produire un pion." << std::endl;;
-        jeu.afficherEtatJeu();
         return;
     }
 
@@ -167,10 +166,10 @@ void Chateau::produirePion() {
         std::cout << " ☞ Sur quelle case souhaitez-vous produire un pion ? (x y): ";
         std::cin >> userx >> usery;
         if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
-            std::cerr << " ✕ : Coordonnées hors du plateau, choissisez parmi les cases vertes." << std::endl;
+            std::cerr << " ✕ : Coordonnées hors du plateau, choisisez parmi les cases vertes." << std::endl;
         } else {
             if (std::find(adjacentes.begin(), adjacentes.end(), std::make_pair(userx, usery)) == adjacentes.end()) {
-                std::cerr << " ✕ : Case inaccessible, choissisez parmi les cases vertes." << std::endl;
+                std::cerr << " ✕ : Case inaccessible, choisisez parmi les cases vertes." << std::endl;
             } else {
                 char choix;
                 std::cout << "\t ☞ Quel pion souhaitez-vous produire ? (S, G, P): ";
@@ -209,7 +208,7 @@ void Chateau::produirePion() {
                     std::cerr << " ✕ : Erreur, choix invalide." << std::endl;
                 }
                 std::cout << " ☞ Le pion a été généré avec succès à la case (" << userx << ", " << usery << ")." << std::endl;
-                jeu.afficherEtatJeu();
+                ordre = true;
                 return;
             }
         }
@@ -261,7 +260,7 @@ void Seigneur::transformation() {
         jeu.supprimerPion(x,y);
         jeu.placerPion(chateau, x, y);
         player->ajouterOr(-15);
-        jeu.afficherEtatJeu();
         std::cout << "  ☞  Le seigneur s'est transformé en château !" << std::endl;
+        ordre = true;
     }
 }

@@ -36,15 +36,16 @@ public:
     char getIcon() const;
     
 protected:
-    int x, y;   // Coordonnées du pion
-    int pv;     // Point de vie du pion
-    char icon;  // Lettre Représentant le pion
-    int color;  // 1 = rouge, 0 = bleu
-    int puiss;  // Nb de points de vie enlevé à la cible lors d’une attaque du pion
-    int depl;   // Nb maximum de cases parcourues par le pion à chaque tour
-    int prod;   // Qté d’or produite par le pion (lors d’une action pour un paysan)/
-    int cout;   // Coût en or pour construire un pion de ce type.
-    JeuInterface& jeu;   // Jeu dans lequel le pion est présent
+    int x, y;               // Coordonnées du pion
+    int pv;                 // Point de vie du pion
+    char icon;              // Lettre Représentant le pion
+    int color;              // 1 = rouge, 0 = bleu
+    int puiss;              // Nb de points de vie enlevé à la cible lors d’une attaque du pion
+    int depl;               // Nb maximum de cases parcourues par le pion à chaque tour
+    int prod;               // Qté d’or produite par le pion (lors d’une action pour un paysan)/
+    int cout;               // Coût en or pour construire un pion de ce type.
+    JeuInterface& jeu;      // Jeu dans lequel le pion est présent
+    bool ordre;             // Savoir si un ordre a déjà été donné au pion 
 };
 
 /*
