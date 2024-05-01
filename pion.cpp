@@ -149,7 +149,6 @@ int Chateau::produirePion() {
     std::vector<std::pair<int, int>> adjacentes;
     std::vector<std::pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Haut, droite, bas, gauche
     int userx, usery;
-    Pion* cible;
 
     for (auto& dir : directions) {
         int nx = x + dir.first;

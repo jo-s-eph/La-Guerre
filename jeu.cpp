@@ -32,46 +32,49 @@ Pion* Jeu::getPion(int x, int y){
 Joueur* Jeu::getJoueur1(){ return &Joueur1; }
 Joueur* Jeu::getJoueur2(){ return &Joueur2; }
 
-void Jeu::placerPion(Pion* pion, int x, int y){
+int Jeu::placerPion(Pion* pion, int x, int y){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
-        return;
+        return 0;
     }
     if (plateau[x-1][y-1] != nullptr) {
         std::cerr << "Erreur : Case déjà occupée." << std::endl;
-        return;
+        return 0;
     }
 
     plateau[x - 1][y - 1] = pion;
     pion->setX(x);
     pion->setY(y);
+    return 1;
 }
 
 
-void Jeu::supprimerPion(int x, int y){
+int Jeu::supprimerPion(int x, int y){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
-        return;
+        return 0;
     }
     if (plateau[x-1][y-1] == nullptr) {
         std::cerr << "Erreur : Pas de pion à supprimer." << std::endl;
-        return;
+        return 0;
     }
     // delete plateau[x-1][y-1];
     plateau[x-1][y-1] = nullptr;
+    return 1;
 }
 
-void Jeu::deplacerPion(int x, int y, int newx, int newy){
+int Jeu::deplacerPion(int x, int y, int newx, int newy){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE || newx < 1 || newx > TAILLE || newy < 1 || newy > TAILLE) {
         std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
-        return;
+        return 0;
     }
     if (plateau[x-1][y-1] == nullptr) {
         std::cerr << "Erreur : Pas de pion à déplacer." << std::endl;
-        return;
+        return 0;
     }
     placerPion(plateau[x-1][y-1], newx, newy);
     supprimerPion(x, y);
+    return 1;
 }
 
 bool Jeu::estOccupee(int x, int y) { return (plateau[x - 1][y - 1] != nullptr); }

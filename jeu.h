@@ -18,9 +18,9 @@ public:
     void afficherGrille();
     void afficherCases(const std::vector<std::pair<int, int>>& cases);
     void afficherOr();
-    void placerPion(Pion* pion, int x, int y);
-    void supprimerPion(int x, int y);
-    void deplacerPion(int x, int y, int newx, int newy);
+    int placerPion(Pion* pion, int x, int y);
+    int supprimerPion(int x, int y);
+    int deplacerPion(int x, int y, int newx, int newy);
     Pion* getPion(int x, int y);
     Joueur* getJoueur1();
     Joueur* getJoueur2();
