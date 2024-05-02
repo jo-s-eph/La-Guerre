@@ -19,58 +19,64 @@ void Jeu::initialiserPlateau() {
     placerPion(chateauBleu,9,16);
     Joueur2.addNbChateau(1);
     placerPion(paysanBleu,10,16);
-
-    // paysanBleu->deplacer();
 }
 
+
 void Jeu::demarrer() {
-    
     afficherEtatJeu();
-    
     bool tourOk;
     int userx, usery;
     char userc;
+    bool isRedTurn = true;
+    Joueur* player;
 
-    while (!FinPartie())
-    {
-        std::cout << "C'est au tour de l'équipe Rouge de jouer : " << std::endl;
-        while (!tourOk)
-        {   
-            std::cout << " ☞ Souhaitez-vous donner un ordre ou valider votre tour (O/V) : ";
+    while (!FinPartie()) {
+        if (isRedTurn) { player = &Joueur1;} 
+        else { player = &Joueur2;}
+        tourOk = false;
+        std::cout << (isRedTurn ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe ";
+        std::cout << (isRedTurn ? "Rouge" : "Bleu") << " de jouer : \t" << RESET << std::endl;
+        afficherEtatJeu();
+        resetOrdrePion();
+        while (!tourOk) {
+            std::cout << " ☞ Souhaitez-vous" << MAGENTA << " donner un ordre " << RESET;
+            std::cout << "ou" << CYAN << " valider votre tour "<< RESET;
+            std::cout <<"(" << MAGENTA << "O" << RESET << "/" << CYAN << "V" << RESET << ") : ";
             std::cin >> userc;
-            switch (userc)
-            {
-            case 'V':
-                tourOk = true;
-                break;
-            
-            case 'O':
-            {
-                while (true)
-                {
-                    std::pair<int, int> coord = askCoord(" ☞ Sur quel pion souhaitez-vous agir ? ");
-                    std::tie(userx, usery) = coord;
-                    Pion* p = getPion(userx,usery);
+            switch (userc) {
+                case 'V':
+                    tourOk = true;
+                    break;
+                case 'O':
+                    while (true) {
+                        std::pair<int, int> coord = askCoord(" ☞ Sur quel pion souhaitez-vous agir ? ");
+                        std::tie(userx, usery) = coord;
+                        Pion* p = getPion(userx, usery);
+                        
                         if (p == nullptr) {
                             printErr("Aucun pion sur cette case.");
                         } else {
-                            if (p->ordre) {
-                                printErr("Vous avez déjà donné un ordre à ce pion.");
-                                break;
-                            }
-                            else
+                            if (p->getColor() != player->getId())
                             {
-                                ChoixActions(p);
-                                afficherEtatJeu();
-                                break;
+                                printErr("Ce pion ne vous appartient pas.");
+                            } else {
+                                if (p->ordre) {
+                                    printErr("Vous avez déjà donné un ordre à ce pion.");
+                                    break;
+                                } else {
+                                    ChoixActions(p);
+                                    afficherEtatJeu();
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-            default:
-                // printErr("Choix incorrect.");
+                    break;
+                default:
+                    printErr("Choix incorrect.");
             }
-    }
+        }
+        isRedTurn = !isRedTurn;
     }
 }
 
@@ -83,6 +89,17 @@ Pion* Jeu::getPion(int x, int y){
     return plateau[x - 1][y - 1];
 }
 
+void Jeu::resetOrdrePion()
+{
+    for (int i = 0; i < TAILLE; ++i) {
+        for (int j = 0; j < TAILLE; ++j) {
+            Pion* p = plateau[i][j];
+            if (p != nullptr) {
+                p->ordre = 0;
+            }
+        }
+    }
+}
 int Jeu::ChoixActions(Pion* pion)
 {
     int choix;
@@ -221,8 +238,8 @@ void Jeu::afficherEtatJeu() {
 }
 void Jeu::afficherOr()
 {
-    std::cout << YELLOW << "\n\tJoueur 1 (" << Joueur1.getNom() << ") : " << Joueur1.getOr() << " ◉";
-    std::cout << "\t\tJoueur 2 (" << Joueur2.getNom() << ") : " << Joueur2.getOr() << " ◉";
+    std::cout << YELLOW << "\n\tJoueur " << Joueur1.getNom() << " : " << Joueur1.getOr() << " ◉";
+    std::cout << "\t\tJoueur " << Joueur2.getNom() << " : " << Joueur2.getOr() << " ◉";
 }
 
 void Jeu::afficherGrille()
@@ -268,7 +285,7 @@ void Jeu::afficherCases(const std::vector<std::pair<int, int>>& cases)
             } 
             else {
                 if (std::find(cases.begin(), cases.end(), std::make_pair(j + 1, i + 1)) != cases.end())
-                    std::cout << GREEN << "◼︎ " << RESET;
+                    std::cout << LIGHT_GREEN << "◼︎ " << RESET;
                 else
                     std::cout << GREY << "☐ " << RESET;
             }
