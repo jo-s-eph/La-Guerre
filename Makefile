@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS=-Wall -Wextra -std=c++20
+CPPFLAGS= -Wall -Wextra -std=c++20
 CPPFILES= main
 FILENAME= Projet
 BIN= jeu.exe
@@ -7,7 +7,7 @@ BIN= jeu.exe
 all: $(CPPFILES)
 
 main: main.cpp pion.cpp jeu.cpp joueur.cpp utils.cpp
-	$(CC) -o jeu.exe $^ $(CPPFLAGS)
+	$(CC) -o jeu.exe $^ $(CPPFLAGS) -lboost_system
 
 zip:
 	mkdir $(FILENAME)
