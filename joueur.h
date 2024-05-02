@@ -5,12 +5,13 @@
 class Joueur {
 public:
     Joueur(int id, int gold, const std::string& nom);
-    
+
     std::string getNom() const;
     int getOr() const;
     void addOr(int montant);
+    int nbchateau;
 
-private:
+protected:
     int id;
     int gold;
     std::string nom; 

@@ -1,7 +1,7 @@
 #include "jeu.h"
 
 
-Jeu::Jeu() : Joueur1(1, 20, "Rouge"), Joueur2(0, 20, "Bleu") {
+Jeu::Jeu() : Joueur1(1, OR_DEPART, "Rouge"), Joueur2(0, OR_DEPART, "Bleu") {
     initialiserPlateau();
 }
 
@@ -12,21 +12,161 @@ void Jeu::initialiserPlateau() {
     Paysan* paysanRouge = new Paysan(1,*this);
     Chateau* chateauBleu = new Chateau(0,*this);
     Paysan* paysanBleu = new Paysan(0,*this);
-    
+
     placerPion(chateauRouge,9,4);
+    Joueur1.nbchateau++;
     placerPion(paysanRouge,10,4);
     placerPion(chateauBleu,9,16);
+    Joueur2.nbchateau++;
     placerPion(paysanBleu,10,16);
 
-    paysanBleu->deplacer();
+    // paysanBleu->deplacer();
 }
 
 void Jeu::demarrer() {
+    
     afficherEtatJeu();
+    
+    bool tourOk;
+    int userx, usery;
+    char userc;
+
+    while (!FinPartie())
+    {
+        std::cout << "C'est au tour de l'équipe Rouge de jouer : " << std::endl;
+        while (!tourOk)
+        {   
+            std::cout << " ☞ Souhaitez-vous donner un ordre ou valider votre tour (O/V) : ";
+            std::cin >> userc;
+            switch (userc)
+            {
+            case 'V':
+                tourOk = true;
+                break;
+            
+            case 'O':
+                while (true)
+                {
+                    std::cout << " ☞ Sur quel pion souhaitez-vous agir ? (x y) : ";
+                    std::cin >> userx >> usery;
+                    if (userx < 1 || userx > TAILLE || usery < 1 || usery > TAILLE) {
+                        std::cerr << " ✕ : Coordonnées hors du plateau." << std::endl;
+                    } 
+                    else {
+                        Pion* p = getPion(userx,usery);
+                        if (p == nullptr) {
+                            std::cerr << " ✕ : Aucun pion sur cette case." << std::endl;
+                        } else {
+                            // p->getColor()
+                            if (p->ordre)
+                                {std::cerr << " ✕ : Vous avez déjà donné un ordre à ce pion" << std::endl;
+                                break;}
+                            else
+                            {
+                                Pion* p = getPion(userx,usery);
+                                ChoixActions(p);
+                                afficherEtatJeu();
+                                break;
+                            }
+                        }
+                    }
+                }
+            default:
+                std::cerr << " ✕ : dChoix incorrect." << std::endl;
+            }
+    }
+    }
+}
+
+bool Jeu::FinPartie()
+{
+    return (Joueur1.nbchateau == 0 || Joueur2.nbchateau == 0);   
 }
 
 Pion* Jeu::getPion(int x, int y){
     return plateau[x - 1][y - 1];
+}
+
+int Jeu::ChoixActions(Pion* pion)
+{
+    int choix;
+    std::cout << "Pion séléctionné : "<< YELLOW << pion->getIcon() << RESET << std::endl;
+    std::cout << "Action(s) possible(s) : " << std::endl;
+
+    if (pion->getIcon() == 'C') {
+        Chateau* chateau = static_cast<Chateau*>(pion);
+        while (true)
+        {
+            std::cout << "\t[2] -  Construire un pion sur une case adjacente" << std::endl;
+            std::cout << "Votre choix : ";
+            std::cin >> choix;
+
+            if (choix != 2)
+                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;
+            else
+                return chateau->produirePion();
+        }
+    } else if (pion->getIcon() == 'P') {
+        Paysan* paysan = static_cast<Paysan*>(pion);
+        while (true)
+        {
+            std::cout << "\t[0] -  Se déplacer" << std::endl;
+            std::cout << "\t[3] -  Amasser des ressources" << std::endl;
+            std::cout << "Votre choix : ";
+            std::cin >> choix;
+            switch (choix)
+            {
+            case 0:
+                return paysan->deplacer();
+            case 3:
+                return paysan->genererOr();
+            default:
+                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+            }
+        }
+    } else if (pion->getIcon() == 'S') {
+        Seigneur* seigneur = static_cast<Seigneur*>(pion);
+        while (true)
+        {
+            std::cout << "\t[0] -  Se déplacer" << std::endl;
+            std::cout << "\t[1] -  Attaquer" << std::endl;
+            std::cout << "\t[4] -  Se transformer en château" << std::endl;
+            std::cout << "Votre choix : ";
+            std::cin >> choix;
+            switch (choix)
+            {
+            case 0:
+                return seigneur->deplacer();
+            case 1:
+                return seigneur->attaquer();
+            case 4:
+                return seigneur->transformation();
+            default:
+                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+            }
+        }
+    } else if (pion->getIcon() == 'G') {
+        Guerrier* guerrier = static_cast<Guerrier*>(pion);
+        while (true)
+        {
+            std::cout << "\t[0] -  Se déplacer" << std::endl;
+            std::cout << "\t[1] -  Attaquer" << std::endl;
+            std::cout << "Votre choix : ";
+            std::cin >> choix;
+            switch (choix)
+            {
+            case 0:
+                return guerrier->deplacer();
+            case 1:
+                return guerrier->attaquer();
+            default:
+                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+            }
+        }
+    } else {
+        std::cerr << "Erreur : Type de pion inconnu." << std::endl;
+        return 0;
+    }
 }
 
 Joueur* Jeu::getJoueur1(){ return &Joueur1; }

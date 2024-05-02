@@ -4,6 +4,7 @@
 #include <cmath>
 
 #define TAILLE 20
+#define OR_DEPART 5
 
 #define RESET   "\033[0m"
 #define RED     "\033[0;101m"

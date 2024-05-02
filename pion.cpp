@@ -109,7 +109,7 @@ int Pion::genererOr()
     Joueur* player = jeu.getJoueur2();
     if (getColor()){ player = jeu.getJoueur1();}
     player->addOr(prod);
-    std::cout << " ☞ Le pion "<< getIcon() << " vient de produire" << YELLOW << prod << RESET << "pièces d'or.";
+    std::cout << " ☞ Le pion "<< getIcon() << " vient de produire " << YELLOW << prod << RESET << " pièces d'or.";
     if (getIcon() == 'P') { ordre = true; } // Car le château génère de l'or passivement
     return 1;
 }
@@ -210,7 +210,6 @@ int Chateau::produirePion() {
                 } else {
                     std::cerr << " ✕ : Erreur, choix invalide." << std::endl;
                 }
-                std::cout << " ☞ Le pion a été généré avec succès à la case (" << userx << ", " << usery << ")." << std::endl;
                 ordre = true;
                 return 1;
             }

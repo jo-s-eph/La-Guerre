@@ -34,6 +34,7 @@ public:
     int getPv() const;
     int getColor() const;
     char getIcon() const;
+    bool ordre;             // Savoir si un ordre a déjà été donné au pion 
     
 protected:
     int x, y;               // Coordonnées du pion
@@ -45,7 +46,6 @@ protected:
     int prod;               // Qté d’or produite par le pion (lors d’une action pour un paysan)/
     int cout;               // Coût en or pour construire un pion de ce type.
     JeuInterface& jeu;      // Jeu dans lequel le pion est présent
-    bool ordre;             // Savoir si un ordre a déjà été donné au pion 
 };
 
 /*
@@ -66,8 +66,14 @@ class Chateau : public Pion {
     // Déclaration de la classe Chateau héritant de Pion
 public:
     Chateau(int couleur, JeuInterface& j);
+    // ~Chateau() 
+    // {
+    //     Joueur* player = jeu.getJoueur2();
+    //     if (getColor()){ player = jeu.getJoueur1();}
+    //     player->nbchateau--;
+    //     std::cout << " ☞ Un château de l'équipe "<< player->getNom()<< " vient de s'effondrer." << std::endl;
+    // }
     int produirePion();    // Méthode spé à Chateau
-    // virtual void deplacer(int newX, int newY) override;
 };
 
 /*
