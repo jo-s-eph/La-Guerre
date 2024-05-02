@@ -8,6 +8,7 @@ public:
 
     std::string getNom() const;
     int getOr() const;
+    int getId() const;
     void addOr(int montant);
     int getNbChateau() const;
     void addNbChateau(int montant);

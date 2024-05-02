@@ -4,6 +4,7 @@ Joueur::Joueur(int id, int gold, const std::string& nom) : id(id), gold(gold), n
 
 
 std::string Joueur::getNom() const {return nom;}
+int Joueur::getId() const {return id;}
 
 int Joueur::getOr() const {return gold;}
 int Joueur::getNbChateau() const {return nbchateau;}
