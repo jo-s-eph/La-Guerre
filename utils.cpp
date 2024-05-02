@@ -25,5 +25,6 @@ void printErr(std::string msg)
 
 void printValid(std::string msg)
 {
-    std::cerr << GREEN2 << " ✓ " << RESET << ' ' << msg << std::endl;
+    std::cerr << GREEN << " ✓ " << RESET << ' ' << msg << std::endl;
 }
+
