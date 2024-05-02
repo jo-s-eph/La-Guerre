@@ -9,9 +9,11 @@ public:
     std::string getNom() const;
     int getOr() const;
     void addOr(int montant);
-    int nbchateau;
+    int getNbChateau() const;
+    void addNbChateau(int montant);
 
 protected:
+    int nbchateau = 0;
     int id;
     int gold;
     std::string nom; 
