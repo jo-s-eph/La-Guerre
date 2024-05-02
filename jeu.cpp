@@ -14,10 +14,10 @@ void Jeu::initialiserPlateau() {
     Paysan* paysanBleu = new Paysan(0,*this);
 
     placerPion(chateauRouge,9,4);
-    Joueur1.nbchateau++;
+    Joueur1.addNbChateau(1);
     placerPion(paysanRouge,10,4);
     placerPion(chateauBleu,9,16);
-    Joueur2.nbchateau++;
+    Joueur2.addNbChateau(1);
     placerPion(paysanBleu,10,16);
 
     // paysanBleu->deplacer();
@@ -45,25 +45,21 @@ void Jeu::demarrer() {
                 break;
             
             case 'O':
+            {
                 while (true)
                 {
-                    std::cout << " ☞ Sur quel pion souhaitez-vous agir ? (x y) : ";
-                    std::cin >> userx >> usery;
-                    if (userx < 1 || userx > TAILLE || usery < 1 || usery > TAILLE) {
-                        std::cerr << " ✕ : Coordonnées hors du plateau." << std::endl;
-                    } 
-                    else {
-                        Pion* p = getPion(userx,usery);
+                    std::pair<int, int> coord = askCoord(" ☞ Sur quel pion souhaitez-vous agir ? ");
+                    std::tie(userx, usery) = coord;
+                    Pion* p = getPion(userx,usery);
                         if (p == nullptr) {
-                            std::cerr << " ✕ : Aucun pion sur cette case." << std::endl;
+                            printErr("Aucun pion sur cette case.");
                         } else {
-                            // p->getColor()
-                            if (p->ordre)
-                                {std::cerr << " ✕ : Vous avez déjà donné un ordre à ce pion" << std::endl;
-                                break;}
+                            if (p->ordre) {
+                                printErr("Vous avez déjà donné un ordre à ce pion.");
+                                break;
+                            }
                             else
                             {
-                                Pion* p = getPion(userx,usery);
                                 ChoixActions(p);
                                 afficherEtatJeu();
                                 break;
@@ -72,7 +68,7 @@ void Jeu::demarrer() {
                     }
                 }
             default:
-                std::cerr << " ✕ : dChoix incorrect." << std::endl;
+                // printErr("Choix incorrect.");
             }
     }
     }
@@ -80,7 +76,7 @@ void Jeu::demarrer() {
 
 bool Jeu::FinPartie()
 {
-    return (Joueur1.nbchateau == 0 || Joueur2.nbchateau == 0);   
+    return (Joueur1.getNbChateau() == 0 || Joueur2.getNbChateau() == 0);   
 }
 
 Pion* Jeu::getPion(int x, int y){
@@ -102,7 +98,7 @@ int Jeu::ChoixActions(Pion* pion)
             std::cin >> choix;
 
             if (choix != 2)
-                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;
+                printErr("Veuillez choisir une action parmi la liste ci-dessus");
             else
                 return chateau->produirePion();
         }
@@ -121,7 +117,7 @@ int Jeu::ChoixActions(Pion* pion)
             case 3:
                 return paysan->genererOr();
             default:
-                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+                printErr("Veuillez choisir une action parmi la liste ci-dessus");
             }
         }
     } else if (pion->getIcon() == 'S') {
@@ -142,7 +138,7 @@ int Jeu::ChoixActions(Pion* pion)
             case 4:
                 return seigneur->transformation();
             default:
-                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+                printErr("Veuillez choisir une action parmi la liste ci-dessus");
             }
         }
     } else if (pion->getIcon() == 'G') {
@@ -160,11 +156,11 @@ int Jeu::ChoixActions(Pion* pion)
             case 1:
                 return guerrier->attaquer();
             default:
-                std::cerr << "Veuillez choisir une action parmi la liste ci-dessus" << std::endl;;
+                printErr("Veuillez choisir une action parmi la liste ci-dessus");
             }
         }
     } else {
-        std::cerr << "Erreur : Type de pion inconnu." << std::endl;
+        printErr("Type de pion inconnu.");
         return 0;
     }
 }
@@ -174,11 +170,11 @@ Joueur* Jeu::getJoueur2(){ return &Joueur2; }
 
 int Jeu::placerPion(Pion* pion, int x, int y){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
-        std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
+        printErr("Coordonnées hors du plateau.");
         return 0;
     }
     if (plateau[x-1][y-1] != nullptr) {
-        std::cerr << "Erreur : Case déjà occupée." << std::endl;
+        printErr("Case déjà occupée.");
         return 0;
     }
 
@@ -191,11 +187,11 @@ int Jeu::placerPion(Pion* pion, int x, int y){
 
 int Jeu::supprimerPion(int x, int y){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE) {
-        std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
+        printErr("Coordonnées hors du plateau.");
         return 0;
     }
     if (plateau[x-1][y-1] == nullptr) {
-        std::cerr << "Erreur : Pas de pion à supprimer." << std::endl;
+        printErr("Case déjà occupée.");
         return 0;
     }
     // delete plateau[x-1][y-1];
@@ -205,11 +201,11 @@ int Jeu::supprimerPion(int x, int y){
 
 int Jeu::deplacerPion(int x, int y, int newx, int newy){
     if (x < 1 || x > TAILLE || y < 1 || y > TAILLE || newx < 1 || newx > TAILLE || newy < 1 || newy > TAILLE) {
-        std::cerr << "Erreur : Coordonnées hors du plateau." << std::endl;
+        printErr("Coordonnées hors du plateau.");
         return 0;
     }
     if (plateau[x-1][y-1] == nullptr) {
-        std::cerr << "Erreur : Pas de pion à déplacer." << std::endl;
+        printErr("Case déjà occupée.");
         return 0;
     }
     placerPion(plateau[x-1][y-1], newx, newy);
