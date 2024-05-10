@@ -21,7 +21,11 @@
 int manhattanDistance(int x1, int y1, int x2, int y2);
 
 std::pair<int, int> askCoord(std::string question);
+char askChar(std::string question);
+void print(std::string msg);
 void printErr(std::string msg);
 void printValid(std::string msg);
+void printChoix();
+void printTour(bool isRedTurn);
 
 #endif // UTILS_H

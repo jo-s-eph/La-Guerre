@@ -22,7 +22,8 @@ void Jeu::initialiserPlateau() {
 }
 
 
-void Jeu::demarrer() {
+void Jeu::demarrer() 
+{
     afficherEtatJeu();
     bool tourOk;
     int userx, usery;
@@ -30,25 +31,28 @@ void Jeu::demarrer() {
     bool isRedTurn = true;
     Joueur* player;
 
-    while (!FinPartie()) {
-        if (isRedTurn) { player = &Joueur1;} 
-        else { player = &Joueur2;}
+    while (!FinPartie())
+    {
+        if (isRedTurn) {player = &Joueur1;} 
+        else {player = &Joueur2;}
         tourOk = false;
-        std::cout << (isRedTurn ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe ";
-        std::cout << (isRedTurn ? "Rouge" : "Bleu") << " de jouer : \t" << RESET << std::endl;
+        printTour(isRedTurn);
         afficherEtatJeu();
         resetOrdrePion();
-        while (!tourOk) {
-            std::cout << " ☞ Souhaitez-vous" << MAGENTA << " donner un ordre " << RESET;
-            std::cout << "ou" << CYAN << " valider votre tour "<< RESET;
-            std::cout <<"(" << MAGENTA << "O" << RESET << "/" << CYAN << "V" << RESET << ") : ";
-            std::cin >> userc;
-            switch (userc) {
+
+        while (!tourOk) 
+        {
+            printChoix();
+            userc = askChar(" ");
+
+            switch (userc)
+            {
                 case 'V':
                     tourOk = true;
                     break;
                 case 'O':
-                    while (true) {
+                    while (true) 
+                    {
                         std::pair<int, int> coord = askCoord(" ☞ Sur quel pion souhaitez-vous agir ? ");
                         std::tie(userx, usery) = coord;
                         Pion* p = getPion(userx, usery);
@@ -103,15 +107,15 @@ void Jeu::resetOrdrePion()
 int Jeu::ChoixActions(Pion* pion)
 {
     int choix;
-    std::cout << "Pion séléctionné : "<< YELLOW << pion->getIcon() << RESET << std::endl;
-    std::cout << "Action(s) possible(s) : " << std::endl;
+    print("Pion séléctionné : " + std::string(YELLOW) + pion->getIcon() + RESET);
+    print("Action(s) possible(s) : ");
 
     if (pion->getIcon() == 'C') {
         Chateau* chateau = static_cast<Chateau*>(pion);
         while (true)
         {
-            std::cout << "\t[2] -  Construire un pion sur une case adjacente" << std::endl;
-            std::cout << "Votre choix : ";
+            print("\t[2] -  Construire un pion sur une case adjacente");
+            print("Votre choix : ");
             std::cin >> choix;
 
             if (choix != 2)
@@ -123,9 +127,9 @@ int Jeu::ChoixActions(Pion* pion)
         Paysan* paysan = static_cast<Paysan*>(pion);
         while (true)
         {
-            std::cout << "\t[0] -  Se déplacer" << std::endl;
-            std::cout << "\t[3] -  Amasser des ressources" << std::endl;
-            std::cout << "Votre choix : ";
+            print("\t[0] -  Se déplacer");
+            print("\t[3] -  Amasser des ressources");
+            print("Votre choix : ");
             std::cin >> choix;
             switch (choix)
             {
@@ -141,10 +145,10 @@ int Jeu::ChoixActions(Pion* pion)
         Seigneur* seigneur = static_cast<Seigneur*>(pion);
         while (true)
         {
-            std::cout << "\t[0] -  Se déplacer" << std::endl;
-            std::cout << "\t[1] -  Attaquer" << std::endl;
-            std::cout << "\t[4] -  Se transformer en château" << std::endl;
-            std::cout << "Votre choix : ";
+            print("\t[0] -  Se déplacer");
+            print("\t[1] -  Attaquer");
+            print("\t[4] -  Se transformer en château");
+            print("Votre choix : ");
             std::cin >> choix;
             switch (choix)
             {
@@ -162,9 +166,9 @@ int Jeu::ChoixActions(Pion* pion)
         Guerrier* guerrier = static_cast<Guerrier*>(pion);
         while (true)
         {
-            std::cout << "\t[0] -  Se déplacer" << std::endl;
-            std::cout << "\t[1] -  Attaquer" << std::endl;
-            std::cout << "Votre choix : ";
+            print("\t[0] -  Se déplacer");
+            print("\t[1] -  Attaquer");
+            print("Votre choix : ");
             std::cin >> choix;
             switch (choix)
             {
@@ -236,6 +240,7 @@ void Jeu::afficherEtatJeu() {
     afficherOr();
     afficherGrille();
 }
+
 void Jeu::afficherOr()
 {
     std::cout << YELLOW << "\n\tJoueur " << Joueur1.getNom() << " : " << Joueur1.getOr() << " ◉";
