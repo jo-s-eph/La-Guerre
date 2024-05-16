@@ -21,6 +21,7 @@ public:
     int placerPion(Pion* pion, int x, int y);
     int supprimerPion(int x, int y);
     int deplacerPion(int x, int y, int newx, int newy);
+    int libererCase(int x, int y);
     void resetOrdrePion();
     Pion* getPion(int x, int y);
     int ChoixActions(Pion* pion);

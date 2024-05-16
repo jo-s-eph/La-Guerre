@@ -12,13 +12,16 @@ void Jeu::initialiserPlateau()
 
     Chateau *chateauRouge = new Chateau(1, *this);
     Paysan *paysanRouge = new Paysan(1, *this);
-    Guerrier *gRouge = new Guerrier(1,*this);
+    Guerrier *gRouge = new Guerrier(1, *this);
+    Seigneur *sRouge = new Seigneur(1, *this);
+
     Chateau *chateauBleu = new Chateau(0, *this);
     Paysan *paysanBleu = new Paysan(0, *this);
 
     placerPion(chateauRouge, 9, 4);
     placerPion(paysanRouge, 10, 4);
     placerPion(gRouge, 9, 17);
+    placerPion(sRouge, 8, 17);
 
     placerPion(chateauBleu, 9, 16);
     placerPion(paysanBleu, 10, 16);
@@ -99,7 +102,10 @@ void Jeu::demarrer()
                 printErr("Choix incorrect.");
             }
         }
-        isRedTurn = !isRedTurn;
+        Joueur1.addOr(Joueur1.getNbChateau() * 2);  // MàJ de l'or produite par le(s) château(x) pour chaque équipe
+        Joueur2.addOr(Joueur2.getNbChateau() * 2);
+
+        isRedTurn = !isRedTurn; // Au tour de l'autre équipe
     }
     printGagnant(FinPartie());
     return;
@@ -109,7 +115,7 @@ int Jeu::FinPartie()
 {
     if (Joueur1.getNbChateau() == 0 || Joueur1.getOr() == 0)
         return 0;
-    if (Joueur2.getNbChateau() == 0|| Joueur1.getOr() == 0)
+    if (Joueur2.getNbChateau() == 0 || Joueur1.getOr() == 0)
         return 1;
     return -1;
 }
@@ -259,7 +265,23 @@ int Jeu::supprimerPion(int x, int y)
         printErr("Case déjà occupée.");
         return 0;
     }
-    delete plateau[x-1][y-1];
+    delete plateau[x - 1][y - 1];
+    plateau[x - 1][y - 1] = nullptr;
+    return 1;
+}
+
+int Jeu::libererCase(int x, int y)
+{
+    if (x < 1 || x > TAILLE || y < 1 || y > TAILLE)
+    {
+        printErr("Coordonnées hors du plateau.");
+        return 0;
+    }
+    if (plateau[x - 1][y - 1] == nullptr)
+    {
+        printErr("Case déjà occupée.");
+        return 0;
+    }
     plateau[x - 1][y - 1] = nullptr;
     return 1;
 }
@@ -277,7 +299,7 @@ int Jeu::deplacerPion(int x, int y, int newx, int newy)
         return 0;
     }
     placerPion(plateau[x - 1][y - 1], newx, newy);
-    supprimerPion(x, y);
+    plateau[x - 1][y - 1] = nullptr;
     return 1;
 }
 
