@@ -163,8 +163,8 @@ Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 
 <!-- CONTACT -->
 ## Contact
-Discord - ekjo
-Lien : [https://github.com/jo-s-eph/La-Guerre](https://github.com/jo-s-eph/La-Guerre)
+- Discord - ekjo
+- Lien : [https://github.com/jo-s-eph/La-Guerre](https://github.com/jo-s-eph/La-Guerre)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
