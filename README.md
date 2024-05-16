@@ -49,13 +49,13 @@
       <a href="#about-the-project">À propos du projet</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#getting-started">Démarrer</a>
       <ul>
         <li><a href="#prerequisites">Prérequis</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation">Installer et jouer</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Utilisation</a></li>
+    <li><a href="#usage">Déroulement de la partie</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -63,7 +63,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## À propos du projet
 
 [![Product Name Screen Shot][product-screenshot]]()
 
@@ -75,42 +75,34 @@ Types de Pions:
 * Guerrier : se déplace et attaque.
 * Paysan : se déplace ou produit des ressources.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+Le but de ce projet est d'intégrer ce jeu de plateau en C++ en utilisant une programmation orienté objet (notion d'héritage, fonctions virtuelles, etc..).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Démarrer
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Pour jouer au jeu : 
 
-### Prerequisites
+### Prérequis
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+* C++20
 
-### Installation
+### Installer et jouer
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Pour pouvoir jouer au jeu, suivre les instructions suivantes : 
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+2. Cloner le repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/jo-s-eph/La-Guerre.git
    ```
-3. Install NPM packages
+3. Compiler
    ```sh
-   npm install
+   make
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Exécuter
+   ```sh
+   ./jeu.exe
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -118,49 +110,41 @@ _Below is an example of how you can instruct your audience on installing and set
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Déroulement de la partie : 
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Chaque joueur commence avec un château, un paysan, et une quantité d'or égale.
+Les joueurs jouent chacun leur tour en donnant des ordres à leurs pions. Un seul ordre par pion par tour.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### Exemples d'ordres :
+- Transforme-toi en château
+- Déplace-toi vers cette case
+- Construis un pion
+- Déplace-toi puis attaque ce pion
+- Amasse des ressources
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Fin de la Partie
 
+Le jeu se termine lorsqu'un joueur perd tous ses châteaux.
 
+### Actions Possibles
+- Ne fait rien
+- Se déplace
+- Se déplace et attaque un autre pion
+- Construit un pion sur une case adjacente
+- Amasse des ressources
+- Se transforme en château
 
-<!-- ROADMAP -->
-## Roadmap
+### Caractéristiques des Pions
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+| Type     | Puiss. | PV ini | Dépl. | Prod. | Coût | Action spéciale                |
+|----------|--------|--------|-------|-------|------|--------------------------------|
+| Château  | 0      | 20     | 0     | 2     | 15   | Construit des pions mobiles    |
+| Guerrier | 5      | 10     | 3     | 0     | 10   |                                |
+| Paysan   | 0      | 1      | 2     | 5     | 20   | Produit de l’or                |
+| Seigneur | 3      | 5      | 1     | 0     | 10   | Se transforme en château       |
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->
