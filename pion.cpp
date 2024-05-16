@@ -304,7 +304,7 @@ int Seigneur::transformation()
         Chateau *chateau = new Chateau(getColor(), jeu);
         chateau->setX(x);
         chateau->setY(y);
-        jeu.supprimerPion(x, y);
+        jeu.libererCase(x, y);
         jeu.placerPion(chateau, x, y);
         player->addOr(-15);
         player->addNbChateau(1);

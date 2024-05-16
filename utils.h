@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define TAILLE 20
-#define OR_DEPART 25
+#define OR_DEPART 250
 
 #define RESET           "\033[0m"
 #define RED             "\033[0;101m"
