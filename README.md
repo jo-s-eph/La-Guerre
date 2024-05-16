@@ -33,7 +33,6 @@
   <p align="center">
     Implémentation d'un jeu de plateau en C++ en utilisant la programmation orienté objet.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
   </p>
@@ -56,7 +55,7 @@
       </ul>
     </li>
     <li><a href="#usage">Déroulement de la partie</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#license">Licence</a></li>
   </ol>
 </details>
 
@@ -144,13 +143,19 @@ Le jeu se termine lorsqu'un joueur perd tous ses châteaux.
 | Seigneur | 3      | 5      | 1     | 0     | 10   | Se transforme en château       |
 
 
+**Dépl. (déplacement)** : Nombre maximum de cases parcourues par le pion à chaque tour.  
+**Coût** : Coût en or pour construire un pion de ce type.  
+**PV ini (points de vie initial)** : Nombre de points de vie à la construction du pion.  
+**Puiss. (puissance)** : Nombre de points de vie enlevé à la cible lors d’une attaque du pion.  
+**Prod. (production)** : Quantité d'or produite par le pion (lors d'une action pour un paysan).
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
-## License
+## Licence
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -158,31 +163,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Discord - ekjo
+Lien : [https://github.com/jo-s-eph/La-Guerre](https://github.com/jo-s-eph/La-Guerre)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
