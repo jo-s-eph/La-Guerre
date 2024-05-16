@@ -66,13 +66,7 @@ class Chateau : public Pion {
     // Déclaration de la classe Chateau héritant de Pion
 public:
     Chateau(int couleur, JeuInterface& j);
-    // ~Chateau() 
-    // {
-    //     Joueur* player = jeu.getJoueur2();
-    //     if (getColor()){ player = jeu.getJoueur1();}
-    //     player->nbchateau--;
-    //     std::cout << " ☞ Un château de l'équipe "<< player->getNom()<< " vient de s'effondrer." << std::endl;
-    // }
+    ~Chateau();
     int produirePion();    // Méthode spé à Chateau
 };
 

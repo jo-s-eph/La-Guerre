@@ -24,7 +24,7 @@ public:
     void resetOrdrePion();
     Pion* getPion(int x, int y);
     int ChoixActions(Pion* pion);
-    bool FinPartie();
+    int FinPartie();
     Joueur* getJoueur1();
     Joueur* getJoueur2();
 

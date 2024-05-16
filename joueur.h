@@ -1,3 +1,6 @@
+#ifndef JOUEUR_H
+#define JOUEUR_H
+
 #pragma once
 #include <vector>
 #include "pion.h"
@@ -19,3 +22,5 @@ protected:
     int gold;
     std::string nom; 
 };
+
+#endif // JOUEUR_H

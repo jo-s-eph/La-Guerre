@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define TAILLE 20
-#define OR_DEPART 200
+#define OR_DEPART 25
 
 #define RESET           "\033[0m"
 #define RED             "\033[0;101m"
@@ -26,6 +26,7 @@ void print(std::string msg);
 void printErr(std::string msg);
 void printValid(std::string msg);
 void printChoix();
-void printTour(bool isRedTurn);
+void printTour(bool who);
+void printGagnant(int who);
 
 #endif // UTILS_H

@@ -1,15 +1,18 @@
 #include "utils.h"
 
 
-int manhattanDistance(int x1, int y1, int x2, int y2) {
+int manhattanDistance(int x1, int y1, int x2, int y2) 
+// Calculer de la distance de Manhattan entre deux cases.
+{
     return abs(x1 - x2) + abs(y1 - y2);
 }
 
 std::pair<int,int> askCoord(std::string question)
+// Demander à l'utilisateur des coordonnées et les retourner sous forme de paire.
 {
     int userx, usery;
     while (true) {
-        std::cout << question << "(x y) : ";
+        std::cout << question << " (x y) : ";
         if (!(std::cin >> userx >> usery)) {
             printErr("Entrée invalide. Veuillez entrer deux entiers.");
             std::cin.clear();
@@ -23,10 +26,11 @@ std::pair<int,int> askCoord(std::string question)
 }
 
 char askChar(std::string question)
+// Demander à l'utilisateur un caractère.
 {
     char userChar;
     while (true) {
-        std::cout << question << " : ";
+        std::cout << question << " (C) : ";
         std::cin >> userChar;
         if (std::cin.fail() || std::cin.peek() != '\n') {
             printErr("Entrée invalide. Veuillez entrer un seul caractère.");
@@ -58,6 +62,10 @@ void printChoix() {
     std::cout << " ☞ Souhaitez-vous" << MAGENTA << " donner un ordre " << RESET << "ou" << CYAN << " valider votre tour " << RESET << "(" << MAGENTA << "O" << RESET << "/" << CYAN << "V" << RESET << ")";
 }
 
-void printTour(bool isRedTurn) {
-    std::cout << (isRedTurn ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe " << (isRedTurn ? "Rouge" : "Bleu") << " de jouer : \t\t" << RESET << std::endl;
+void printTour(bool who) {
+    std::cout << (who ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe " << (who ? "Rouge" : "Bleu") << " de jouer : \t\t" << RESET << std::endl;
+}
+
+void printGagnant(int who) {
+    std::cout << (who ? RED : BLUE) << "\n\t\tL'équipe " << (who ? "Rouge" : "Bleu") << " a gagnée la partie ! \t\t" << RESET << std::endl;
 }
