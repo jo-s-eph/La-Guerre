@@ -13,18 +13,17 @@ void Jeu::initialiserPlateau() {
     Chateau* chateauBleu = new Chateau(0,*this);
     Paysan* paysanBleu = new Paysan(0,*this);
 
-    placerPion(chateauRouge,9,4);
-    Joueur1.addNbChateau(1);
+    placerPion(chateauRouge,11,16);
     placerPion(paysanRouge,10,4);
+    Joueur1.addNbChateau(1);
     placerPion(chateauBleu,9,16);
-    Joueur2.addNbChateau(1);
     placerPion(paysanBleu,10,16);
+    Joueur2.addNbChateau(1);
 }
 
 
 void Jeu::demarrer() 
 {
-    afficherEtatJeu();
     bool tourOk;
     int userx, usery;
     char userc;

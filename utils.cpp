@@ -59,5 +59,5 @@ void printChoix() {
 }
 
 void printTour(bool isRedTurn) {
-    std::cout << (isRedTurn ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe " << (isRedTurn ? "Rouge" : "Bleu") << " de jouer : \t" << RESET << std::endl;
+    std::cout << (isRedTurn ? RED : BLUE) << "\n\t\tC'est au tour de l'équipe " << (isRedTurn ? "Rouge" : "Bleu") << " de jouer : \t\t" << RESET << std::endl;
 }

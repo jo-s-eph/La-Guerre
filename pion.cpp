@@ -73,29 +73,33 @@ int Pion::attaquer()
     }
     if (adjacentes.size() == 0)
     {
-        printErr("Aucun pion proche à attaquer.");
+        printErr("Aucun pion assez proche à attaquer.");
         return 0;
     }
-    while (true) {
-
+    while (true) 
+    {
         std::pair<int, int> coord = askCoord(" ☞ Quel pion souhaitez-vous attaquer avec " + std::string(1, this->getIcon()) + " ?");
         std::tie(userx, usery) = coord;
+        Pion* cible = jeu.getPion(userx,usery);
 
         if (std::find(adjacentes.begin(), adjacentes.end(), std::make_pair(userx, usery)) == adjacentes.end())
             printErr("Case inaccessible.");
-        else {
-            Pion* cible = jeu.getPion(userx,usery);
-            cible->addPv(-puiss);
-            std::cout << " ☞ Pion attaqué ! "<< RED << "-"<< puiss << " PV "<< RESET << "au pion "<< cible->getIcon() << "." << std::endl;
-            if (cible->getPv() <= 0)
-            {
-                jeu.supprimerPion(userx,usery);
-                std::cout << " ☞ Le pion "<< cible->getIcon() << " a succombé à l'attaque." << std::endl;
-            }
-            ordre = true;
-            return 1;
-        }
-        }
+
+        if (cible->color == this->color)
+            printErr("Vous ne pouvez pas attaquer vos propres pions.");
+    }
+    
+    Pion* cible = jeu.getPion(userx,usery);
+    cible->addPv(-puiss);
+    std::cout << " ☞ Pion attaqué ! "<< RED << "-"<< puiss << " PV"<< RESET << " au pion "<< cible->getIcon();
+    std::cout << " | PV Restants :  "<< cible->getPv() << " PV." << std::endl;
+    if (cible->getPv() <= 0)
+    {
+        jeu.supprimerPion(userx,usery);
+        std::cout << " ☞ Le pion "<< cible->getIcon() << " a succombé à l'attaque." << std::endl;
+    }
+    ordre = true;
+    return 1;
     }
 
 int Pion::genererOr()
@@ -133,8 +137,8 @@ Chateau::Chateau(int couleur, JeuInterface& j) : Pion(couleur, j) {
     puiss = 0;
     depl = 0;   // Château ne se déplace pas
     prod = 2;
-    cout = 15;   // Coût en or pour produire (supposé)
-    pv = 20;
+    cout = 15;  // Coût en or pour produire (supposé)
+    pv = 3;
     color = couleur;
     jeu = j;
 }
