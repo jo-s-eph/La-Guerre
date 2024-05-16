@@ -12,16 +12,12 @@ void Jeu::initialiserPlateau()
 
     Chateau *chateauRouge = new Chateau(1, *this);
     Paysan *paysanRouge = new Paysan(1, *this);
-    Guerrier *gRouge = new Guerrier(1, *this);
-    Seigneur *sRouge = new Seigneur(1, *this);
 
     Chateau *chateauBleu = new Chateau(0, *this);
     Paysan *paysanBleu = new Paysan(0, *this);
 
     placerPion(chateauRouge, 9, 4);
     placerPion(paysanRouge, 10, 4);
-    placerPion(gRouge, 9, 17);
-    placerPion(sRouge, 8, 17);
 
     placerPion(chateauBleu, 9, 16);
     placerPion(paysanBleu, 10, 16);
