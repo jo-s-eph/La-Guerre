@@ -45,17 +45,17 @@
   <summary>Sommaire</summary>
   <ol>
     <li>
-      <a href="#about-the-project">À propos du projet</a>
+      <a href="#À-propos-du-projet">À propos du projet</a>
     </li>
     <li>
-      <a href="#getting-started">Démarrer</a>
+      <a href="#Démarrer">Démarrer</a>
       <ul>
-        <li><a href="#prerequisites">Prérequis</a></li>
-        <li><a href="#installation">Installer et jouer</a></li>
+        <li><a href="#Prérequis">Prérequis</a></li>
+        <li><a href="#Installer-et-jouer">Installer et jouer</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Déroulement de la partie</a></li>
-    <li><a href="#license">Licence</a></li>
+    <li><a href="#Déroulement-de-la-partie">Déroulement de la partie</a></li>
+    <li><a href="#Licence">Licence</a></li>
   </ol>
 </details>
 
